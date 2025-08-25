@@ -13,8 +13,8 @@
 
         body {
             font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-            color: #e8e8e8;
+            background: linear-gradient(135deg, #f5f7fa 0%, #eef2f7 100%);
+            color: #334155;
             line-height: 1.6;
             overflow-x: hidden;
         }
@@ -34,7 +34,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
             opacity: 0.3;
         }
 
@@ -47,16 +47,8 @@
             font-size: 4rem;
             font-weight: 800;
             margin-bottom: 1rem;
-            background: linear-gradient(45deg, #fff, #f0f0f0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from { text-shadow: 0 0 20px rgba(255,255,255,0.5); }
-            to { text-shadow: 0 0 40px rgba(255,255,255,0.8); }
+            color: #fff;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         .hero p {
@@ -64,6 +56,7 @@
             opacity: 0.9;
             max-width: 600px;
             margin: 0 auto;
+            color: #e0eaff;
         }
 
         .container {
@@ -80,14 +73,14 @@
         }
 
         .command-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
             border-radius: 20px;
             padding: 2rem;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.05);
         }
 
         .command-card::before {
@@ -104,8 +97,8 @@
 
         .command-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            border-color: #cbd5e1;
         }
 
         .command-card:hover::before {
@@ -123,6 +116,7 @@
             height: 50px;
             border-radius: 12px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -133,12 +127,12 @@
         .command-title {
             font-size: 1.4rem;
             font-weight: 700;
-            color: #fff;
+            color: #1e293b;
         }
 
         .command-syntax {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
             padding: 1rem;
             font-family: 'Fira Code', monospace;
@@ -155,7 +149,7 @@
         }
 
         .command-description {
-            color: #b8b8b8;
+            color: #475569;
             line-height: 1.7;
             margin-bottom: 1rem;
         }
@@ -165,7 +159,7 @@
         }
 
         .example-item {
-            background: rgba(0, 0, 0, 0.2);
+            background: #f8fafc;
             border-left: 3px solid #4ecdc4;
             padding: 1rem;
             margin: 0.5rem 0;
@@ -175,11 +169,11 @@
         }
 
         .filesystem-section {
-            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(78, 205, 196, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.05) 0%, rgba(78, 205, 196, 0.05) 100%);
             border-radius: 20px;
             padding: 3rem;
             margin: 3rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid #e2e8f0;
         }
 
         .filesystem-title {
@@ -200,16 +194,16 @@
         }
 
         .filesystem-item {
-            background: rgba(255, 255, 255, 0.05);
+            background: #ffffff;
             border-radius: 15px;
             padding: 1.5rem;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid #e2e8f0;
         }
 
         .filesystem-item:hover {
             transform: scale(1.05);
-            background: rgba(255, 255, 255, 0.1);
+            background: #f8fafc;
         }
 
         .filesystem-path {
@@ -221,7 +215,7 @@
         }
 
         .tips-section {
-            background: linear-gradient(135deg, rgba(150, 206, 180, 0.1) 0%, rgba(69, 183, 209, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(150, 206, 180, 0.05) 0%, rgba(69, 183, 209, 0.05) 100%);
             border-radius: 20px;
             padding: 3rem;
             margin: 3rem 0;
@@ -229,7 +223,7 @@
         }
 
         .tip-item {
-            background: rgba(255, 255, 255, 0.05);
+            background: #ffffff;
             border-radius: 15px;
             padding: 2rem;
             margin: 1rem 0;
@@ -240,23 +234,23 @@
 
         .tip-item:hover {
             transform: translateX(10px);
-            background: rgba(255, 255, 255, 0.1);
+            background: #f8fafc;
         }
 
         .user-management-section {
-            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(120, 119, 198, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.05) 0%, rgba(120, 119, 198, 0.05) 100%);
             border-radius: 20px;
             padding: 3rem;
             margin: 3rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid #e2e8f0;
         }
 
         .security-concepts {
-            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(220, 53, 69, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.05) 0%, rgba(220, 53, 69, 0.05) 100%);
             border-radius: 20px;
             padding: 3rem;
             margin: 3rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid #e2e8f0;
         }
 
         .security-grid {
@@ -267,9 +261,8 @@
         }
 
         .security-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
             border-radius: 20px;
             padding: 2rem;
             transition: all 0.3s ease;
@@ -277,7 +270,7 @@
 
         .security-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
         }
 
         .security-icon {
@@ -289,30 +282,30 @@
         .security-card h3 {
             text-align: center;
             margin-bottom: 1.5rem;
-            color: #fff;
+            color: #1e293b;
             font-size: 1.3rem;
         }
 
         .concept-item {
             margin: 1rem 0;
             padding: 1rem;
-            background: rgba(0, 0, 0, 0.2);
+            background: #f8fafc;
             border-radius: 10px;
             border-left: 4px solid #ff6b6b;
         }
 
         .concept-detail {
             font-size: 0.9rem;
-            color: #b8b8b8;
+            color: #64748b;
             font-style: italic;
         }
 
         .passwd-breakdown {
-            background: linear-gradient(135deg, rgba(78, 205, 196, 0.1) 0%, rgba(69, 183, 209, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.05) 0%, rgba(69, 183, 209, 0.05) 100%);
             border-radius: 20px;
             padding: 3rem;
             margin: 3rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid #e2e8f0;
         }
 
         .breakdown-container {
@@ -320,10 +313,11 @@
         }
 
         .passwd-example {
-            background: rgba(0, 0, 0, 0.3);
+            background: #ffffff;
             border-radius: 15px;
             padding: 2rem;
             margin-bottom: 2rem;
+            border: 1px solid #e2e8f0;
         }
 
         .passwd-line {
@@ -333,7 +327,7 @@
             text-align: center;
             margin-bottom: 2rem;
             padding: 1rem;
-            background: rgba(0, 0, 0, 0.3);
+            background: #f1f5f9;
             border-radius: 8px;
             word-break: break-all;
         }
@@ -345,16 +339,16 @@
         }
 
         .field-item {
-            background: rgba(255, 255, 255, 0.05);
+            background: #f8fafc;
             border-radius: 10px;
             padding: 1rem;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid #e2e8f0;
             transition: all 0.3s ease;
         }
 
         .field-item:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: #ffffff;
             transform: scale(1.02);
         }
 
@@ -367,19 +361,18 @@
 
         .field-value {
             font-family: 'Fira Code', monospace;
-            color: #fff;
+            color: #1e293b;
             margin-bottom: 0.5rem;
             font-size: 1.1rem;
         }
 
         .field-desc {
             font-size: 0.8rem;
-            color: #b8b8b8;
+            color: #64748b;
         }
         
-        /* New Lab Section Styles */
         .lab-item {
-            background: rgba(255, 255, 255, 0.05);
+            background: #ffffff;
             border-radius: 15px;
             padding: 2rem;
             margin: 1.5rem 0;
@@ -390,22 +383,22 @@
 
         .lab-item:hover {
             transform: translateX(10px);
-            background: rgba(255, 255, 255, 0.1);
+            background: #f8fafc;
         }
 
         .lab-item h4 {
             font-size: 1.2rem;
-            color: #fff;
+            color: #1e293b;
             margin-bottom: 1rem;
         }
 
         .lab-item p {
-            color: #b8b8b8;
+            color: #475569;
             margin-bottom: 1rem;
         }
 
         .lab-item code {
-            background: rgba(0,0,0,0.3);
+            background: #eef2f7;
             padding: 0.2rem 0.4rem;
             border-radius: 4px;
             font-family: 'Fira Code', monospace;
@@ -416,15 +409,15 @@
             font-style: italic;
             font-size: 0.9rem;
             margin-top: 1rem;
-            color: #96ceb4;
+            color: #3b82f6;
         }
 
         .footer {
-            background: rgba(0, 0, 0, 0.3);
+            background: #e2e8f0;
             padding: 3rem 2rem;
             text-align: center;
             margin-top: 4rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid #cbd5e1;
         }
 
         @media (max-width: 768px) {
@@ -450,18 +443,19 @@
             position: absolute;
             top: 1rem;
             right: 1rem;
-            background: rgba(78, 205, 196, 0.2);
-            border: 1px solid #4ecdc4;
-            color: #4ecdc4;
+            background: #e0f2f1;
+            border: 1px solid #b2dfdb;
+            color: #00796b;
             padding: 0.5rem 1rem;
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.8rem;
             transition: all 0.3s ease;
+            font-weight: 500;
         }
 
         .copy-btn:hover {
-            background: rgba(78, 205, 196, 0.3);
+            background: #b2dfdb;
             transform: scale(1.05);
         }
     </style>
@@ -470,7 +464,7 @@
     <div class="hero">
         <div class="hero-content">
             <h1>🐧 Linux Bash Shell</h1>
-            <p>Master the command line with this comprehensive guide to essential bash commands</p>
+         
         </div>
     </div>
 
@@ -510,36 +504,6 @@
 
             <div class="command-card animate-in">
                 <div class="command-header">
-                    <div class="command-icon">🔍</div>
-                    <div class="command-title">File Operations</div>
-                </div>
-                <div class="command-syntax">file [filename]</div>
-                <div class="command-description">
-                    Determine file type and get file information
-                </div>
-                <div class="examples">
-                    <div class="example-item">file Desktop/  # Check if directory</div>
-                    <div class="example-item">file document.txt  # Check file type</div>
-                </div>
-            </div>
-
-            <div class="command-card animate-in">
-                <div class="command-header">
-                    <div class="command-icon">👤</div>
-                    <div class="command-title">User Information</div>
-                </div>
-                <div class="command-syntax">whoami && who</div>
-                <div class="command-description">
-                    Display current user and active login sessions
-                </div>
-                <div class="examples">
-                    <div class="example-item">whoami  # Current username</div>
-                    <div class="example-item">who  # All logged in users</div>
-                </div>
-            </div>
-
-            <div class="command-card animate-in">
-                <div class="command-header">
                     <div class="command-icon">📂</div>
                     <div class="command-title">Directory Management</div>
                 </div>
@@ -556,21 +520,6 @@
 
             <div class="command-card animate-in">
                 <div class="command-header">
-                    <div class="command-icon">📄</div>
-                    <div class="command-title">File Creation & Editing</div>
-                </div>
-                <div class="command-syntax">touch filename</div>
-                <div class="command-description">
-                    Create files or update timestamps
-                </div>
-                <div class="examples">
-                    <div class="example-item">touch newfile  # Create empty file</div>
-                    <div class="example-item">touch existing.txt  # Update timestamp</div>
-                </div>
-            </div>
-
-            <div class="command-card animate-in">
-                <div class="command-header">
                     <div class="command-icon">📋</div>
                     <div class="command-title">Copy & Move</div>
                 </div>
@@ -582,22 +531,6 @@
                     <div class="example-item">cp file1 newdir/  # Copy file</div>
                     <div class="example-item">cp -r dir1 dir2  # Copy directory</div>
                     <div class="example-item">mv file1 newdir/  # Move file</div>
-                </div>
-            </div>
-
-            <div class="command-card animate-in">
-                <div class="command-header">
-                    <div class="command-icon">🗑️</div>
-                    <div class="command-title">File Removal</div>
-                </div>
-                <div class="command-syntax">rm [options] files</div>
-                <div class="command-description">
-                    Remove files and directories safely
-                </div>
-                <div class="examples">
-                    <div class="example-item">rm file1  # Remove file</div>
-                    <div class="example-item">rm -r directory  # Remove directory</div>
-                    <div class="example-item">rm -rf directory  # Force remove</div>
                 </div>
             </div>
 
@@ -632,198 +565,11 @@
                     <div class="example-item">wc -w file1  # Word count only</div>
                 </div>
             </div>
-
-            <div class="command-card animate-in">
-                <div class="command-header">
-                    <div class="command-icon">📜</div>
-                    <div class="command-title">File Paging</div>
-                </div>
-                <div class="command-syntax">more | less filename</div>
-                <div class="command-description">
-                    View large files page by page
-                </div>
-                <div class="examples">
-                    <div class="example-item">more /etc/passwd  # Page through file</div>
-                    <div class="example-item">less file1  # Navigate with arrows</div>
-                </div>
-            </div>
-
-            <div class="command-card animate-in">
-                <div class="command-header">
-                    <div class="command-icon">🕐</div>
-                    <div class="command-title">Date & Time</div>
-                </div>
-                <div class="command-syntax">date</div>
-                <div class="command-description">
-                    Display current date and time
-                </div>
-                <div class="examples">
-                    <div class="example-item">date  # Current date and time</div>
-                </div>
-            </div>
         </div>
-
-        <div class="filesystem-section">
-            <h2 class="filesystem-title">🗂️ Linux File System</h2>
-            <div class="filesystem-grid">
-                <div class="filesystem-item">
-                    <div class="filesystem-path">/</div>
-                    <div>Root directory - the top of the file system hierarchy</div>
-                </div>
-                <div class="filesystem-item">
-                    <div class="filesystem-path">/boot</div>
-                    <div>Boot files required to start the operating system</div>
-                </div>
-                <div class="filesystem-item">
-                    <div class="filesystem-path">/etc</div>
-                    <div>System configuration files (firewall, users, ports)</div>
-                </div>
-                <div class="filesystem-item">
-                    <div class="filesystem-path">/home</div>
-                    <div>User home directories (like /home/gomaa)</div>
-                </div>
-                <div class="filesystem-item">
-                    <div class="filesystem-path">/root</div>
-                    <div>Root user's home directory</div>
-                </div>
-                <div class="filesystem-item">
-                    <div class="filesystem-path">/usr</div>
-                    <div>User programs and system binaries</div>
-                </div>
-                <div class="filesystem-item">
-                    <div class="filesystem-path">/var</div>
-                    <div>Variable data like logs and databases</div>
-                </div>
-                <div class="filesystem-item">
-                    <div class="filesystem-path">/tmp</div>
-                    <div>Temporary files (cleared on reboot)</div>
-                </div>
-                <div class="filesystem-item">
-                    <div class="filesystem-path">/dev</div>
-                    <div>Device files (hardware interfaces)</div>
-                </div>
-                <div class="filesystem-item">
-                    <div class="filesystem-path">/mnt</div>
-                    <div>Mount point for temporary mounted filesystems</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- NEW LAB SECTION START -->
-        <div class="filesystem-section">
-            <h2 class="filesystem-title">🧪 Practical Lab Walkthrough</h2>
-            <p style="text-align: center; max-width: 800px; margin: -1.5rem auto 2.5rem; color: #b8b8b8;">
-                Apply your knowledge! Here are the step-by-step solutions for a common Linux command-line exercise. (Assuming your username is 'user' and you are starting in your home directory <code>/home/user</code>).
-            </p>
-
-            <div class="lab-item">
-                <h4>Question 2: Create the Directory Hierarchy</h4>
-                <p>To create the directories (including nested ones) and the empty files, we use <code>mkdir -p</code> and <code>touch</code>.</p>
-                <div class="example-item">mkdir -p dir1/dir11 dir1/dir12 doc</div>
-                <div class="example-item">touch dir1/dir11/file1 doc/file2</div>
-                <p class="explanation">The <code>-p</code> flag creates parent directories as needed, so <code>dir1</code> is made automatically when creating its subdirectories.</p>
-            </div>
-
-            <div class="lab-item">
-                <h4>Question 3: Copy /etc/passwd</h4>
-                <p>Use the <code>cp</code> command. The source is <code>/etc/passwd</code> and the destination is your home directory (<code>~</code>) with the new name <code>mypasswd</code>.</p>
-                <div class="example-item">cp /etc/passwd ~/mypasswd</div>
-            </div>
-
-            <div class="lab-item">
-                <h4>Question 4: Rename mypasswd to oldpasswd</h4>
-                <p>The <code>mv</code> (move) command is used for both moving and renaming files.</p>
-                <div class="example-item">mv ~/mypasswd ~/oldpasswd</div>
-            </div>
-
-            <div class="lab-item">
-                <h4>Question 5: Find Absolute and Relative Paths</h4>
-                <p>Given your current directory is <code>/home/user</code>, determine the paths to <code>file2</code>.</p>
-                <p><strong>Absolute Path:</strong> The full path from the root (<code>/</code>).<br><code>/home/user/doc/file2</code></p>
-                <p><strong>Relative Path:</strong> The path from your current location.<br><code>doc/file2</code></p>
-            </div>
-
-            <div class="lab-item">
-                <h4>Question 6: Four Ways to Return Home</h4>
-                <p>If you are in <code>/usr/bin</code>, there are several shortcuts to get back to your home directory.</p>
-                <div class="example-item">cd</div>
-                <div class="example-item">cd ~</div>
-                <div class="example-item">cd $HOME</div>
-                <div class="example-item">cd /home/user  # (Using the explicit absolute path)</div>
-            </div>
-
-            <div class="lab-item">
-                <h4>Question 7: List All Hidden Files</h4>
-                <p>Use <code>ls</code> with the <code>-a</code> flag to show all entries, including those starting with a dot (<code>.</code>).</p>
-                <div class="example-item">ls -a ~</div>
-                <p class="explanation">Use <code>ls -A</code> if you want to see hidden files but exclude the <code>.</code> (current) and <code>..</code> (parent) directory entries.</p>
-            </div>
-
-            <div class="lab-item">
-                <h4>Question 8: Copy a Directory</h4>
-                <p>To copy a directory and its contents, use <code>cp</code> with the <code>-r</code> (recursive) flag. This command copies <code>dir1</code> to your <code>Downloads</code> folder and renames it to <code>dir4</code>.</p>
-                <div class="example-item">cp -r ~/dir1 ~/Downloads/dir4</div>
-                <p class="explanation">Note: This assumes a <code>~/Downloads</code> directory exists. If not, you would create it first with <code>mkdir ~/Downloads</code>.</p>
-            </div>
-        </div>
-        <!-- NEW LAB SECTION END -->
-
-        <div class="user-management-section">
-            <h2 class="filesystem-title">👥 User Management & Security</h2>
-            <div class="command-grid">
-                <div class="command-card animate-in">
-                    <div class="command-header">
-                        <div class="command-icon">👤</div>
-                        <div class="command-title">User Information Files</div>
-                    </div>
-                    <div class="command-syntax">cat /etc/passwd</div>
-                    <div class="command-description">
-                        View all user accounts and their configuration details
-                    </div>
-                    <div class="examples">
-                        <div class="example-item"># Format: loginname:x:UID:GID:comment:home:shell</div>
-                        <div class="example-item">root:x:0:0:Super User:/root:/bin/bash</div>
-                        <div class="example-item">gomaa:x:1000:1000:gomaa:/home/gomaa:/bin/bash</div>
-                    </div>
-                </div>
-
-                <div class="command-card animate-in">
-                    <div class="command-header">
-                        <div class="command-icon">🔐</div>
-                        <div class="command-title">Password Shadows</div>
-                    </div>
-                    <div class="command-syntax">sudo cat /etc/shadow</div>
-                    <div class="command-description">
-                        View encrypted password hashes and account policies (requires sudo)
-                    </div>
-                    <div class="examples">
-                        <div class="example-item"># Passwords stored as irreversible hashes</div>
-                        <div class="example-item">gomaa:$y$j9T$hash...</div>
-                        <div class="example-item">bin:*:20186:0:99999:7:::  # Locked account</div>
-                    </div>
-                </div>
-
-                <div class="command-card animate-in">
-                    <div class="command-header">
-                        <div class="command-icon">👥</div>
-                        <div class="command-title">Group Management</div>
-                    </div>
-                    <div class="command-syntax">cat /etc/group</div>
-                    <div class="command-description">
-                        View all groups and their members
-                    </div>
-                    <div class="examples">
-                        <div class="example-item"># Format: groupname:x:GID:members</div>
-                        <div class="example-item">wheel:x:10:gomaa  # Admin group</div>
-                        <div class="example-item">root:x:0:  # Root group</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        
         <div class="user-management-section">
             <h2 class="filesystem-title">⚡ Efficient User & Group Management</h2>
-            <p style="text-align: center; max-width: 800px; margin: -1.5rem auto 2.5rem; color: #b8b8b8;">
+            <p style="text-align: center; max-width: 800px; margin: -1.5rem auto 2.5rem; color: #475569;">
                 While understanding files like <code>/etc/passwd</code> is crucial, daily user management is done with dedicated commands for efficiency and safety.
             </p>
             <div class="command-grid">
@@ -1023,11 +769,6 @@
             </div>
 
             <div class="tip-item">
-                <h3>🔄 File Timestamp Tricks</h3>
-                <p><code>touch</code> can modify file timestamps without changing content - be aware of security implications!</p>
-            </div>
-
-            <div class="tip-item">
                 <h3>📁 Directory Operations</h3>
                 <p>Use <code>mkdir -p</code> to create nested directories in one command</p>
             </div>
@@ -1042,11 +783,73 @@
                 <p>Some system users have no home directory or use <code>/</code> - they don't need interactive access</p>
             </div>
         </div>
+
+        <div class="filesystem-section">
+            <h2 class="filesystem-title">🧪 Comprehensive Lab Exercise</h2>
+            <p style="text-align: center; max-width: 800px; margin: -1.5rem auto 2.5rem; color: #475569;">
+                Apply your knowledge! Here are the step-by-step solutions for the lab exercise. (Assuming your username is 'user' and you start in <code>/home/user</code>).
+            </p>
+
+            <div class="lab-item"><h4>1. Create Directory Structure</h4>
+                <div class="example-item">mkdir -p dir1/dir11 dir1/dir12 doc</div>
+                <div class="example-item">touch dir1/dir11/file1 doc/file2</div>
+                <p class="explanation"><code>mkdir -p</code> creates parent directories as needed. <code>touch</code> creates the empty files in their respective locations.</p>
+            </div>
+            <div class="lab-item"><h4>2. Copy /etc/passwd</h4><div class="example-item">cp /etc/passwd ~/mypasswd</div></div>
+            <div class="lab-item"><h4>3. Rename mypasswd</h4><div class="example-item">mv ~/mypasswd ~/oldpasswd</div></div>
+            <div class="lab-item"><h4>4. Write Absolute Path for file2</h4><p>The full path from the root (<code>/</code>) is: <code>/home/user/doc/file2</code></p></div>
+            <div class="lab-item"><h4>5. Write Relative Path for file2</h4><p>From <code>/home/user</code>, the relative path is: <code>doc/file2</code></p></div>
+            <div class="lab-item"><h4>6. Four Ways to Go Home from /usr/bin</h4>
+                <div class="example-item">cd</div>
+                <div class="example-item">cd ~</div>
+                <div class="example-item">cd $HOME</div>
+                <div class="example-item">cd /home/user</div>
+            </div>
+            <div class="lab-item"><h4>7. List All Hidden Files</h4><div class="example-item">ls -a ~</div></div>
+            <div class="lab-item"><h4>8. Copy dir1 to Downloads as dir4</h4>
+                <div class="example-item">cp -r ~/dir1 ~/Downloads/dir4</div>
+                <p class="explanation">The <code>-r</code> flag is required to copy a directory and its contents recursively.</p>
+            </div>
+            <div class="lab-item"><h4>9. Display First 4 Lines of /etc/passwd</h4><div class="example-item">head -n 4 /etc/passwd</div></div>
+            <div class="lab-item"><h4>10. Display Last 7 Lines of /etc/passwd</h4><div class="example-item">tail -n 7 /etc/passwd</div></div>
+            <div class="lab-item"><h4>11. Remove dir11 in One Step</h4>
+                <div class="example-item">rm -r dir1/dir11</div>
+                <p class="explanation">You'd notice that <code>rmdir</code> fails because <code>dir11</code> contains <code>file1</code>. You must use <code>rm -r</code> to remove a non-empty directory.</p>
+            </div>
+            <div class="lab-item"><h4>12. Count Words in /etc/passwd</h4><div class="example-item">wc -w /etc/passwd</div></div>
+            <div class="lab-item"><h4>13. Count Lines in /etc/passwd</h4><div class="example-item">wc -l /etc/passwd</div></div>
+            <div class="lab-item"><h4>14. Create User 'islam'</h4>
+                <div class="example-item">sudo useradd -c "Islam ITI" islam</div>
+                <div class="example-item">sudo passwd islam</div>
+                <p class="explanation">First, create the user with a comment. Second, set the password interactively. You will be prompted to enter 'islam'.</p>
+            </div>
+            <div class="lab-item"><h4>15. Create User 'baduser'</h4>
+                <div class="example-item">sudo useradd -c "Bad User" baduser</div>
+                <div class="example-item">sudo passwd baduser</div>
+                 <p class="explanation">Follow the same two-step process to create the user and set their password.</p>
+            </div>
+            <div class="lab-item"><h4>16. Create Group 'pgroup' with GID 30000</h4><div class="example-item">sudo groupadd -g 30000 pgroup</div></div>
+            <div class="lab-item"><h4>17. Create Group 'badgroup'</h4><div class="example-item">sudo groupadd badgroup</div></div>
+            <div class="lab-item"><h4>18. Add User 'islam' to 'pgroup'</h4>
+                <div class="example-item">sudo usermod -aG pgroup islam</div>
+                <p class="explanation"><code>-a</code> appends the user to the group, and <code>-G</code> specifies the supplementary group(s).</p>
+            </div>
+            <div class="lab-item"><h4>19. Modify Password for 'islam'</h4>
+                <div class="example-item">sudo passwd islam</div>
+                <p class="explanation">You will be prompted to enter the new password, 'password'.</p>
+            </div>
+            <div class="lab-item"><h4>20. Lock the 'baduser' Account</h4><div class="example-item">sudo usermod -L baduser</div></div>
+            <div class="lab-item"><h4>21. Delete the 'baduser' Account</h4>
+                <div class="example-item">sudo userdel -r baduser</div>
+                <p class="explanation">The <code>-r</code> flag ensures the user's home directory is also removed.</p>
+            </div>
+            <div class="lab-item"><h4>22. Delete the Group 'badgroup'</h4><div class="example-item">sudo groupdel badgroup</div></div>
+        </div>
+
     </div>
 
     <div class="footer">
-        <p>🚀 Master these commands and you'll navigate Linux like a pro!</p>
-        <p>Happy coding! 💻✨</p>
+        <p>🚀Eng. Mohamed Gomaa! 💻✨</p>
     </div>
 
     <script>
@@ -1101,10 +904,10 @@
         // Add sparkle effect on hover for cards
         document.querySelectorAll('.command-card').forEach(card => {
             card.addEventListener('mouseenter', () => {
-                card.style.background = 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)';
+                card.style.background = '#f8fafc';
             });
             card.addEventListener('mouseleave', () => {
-                card.style.background = 'rgba(255, 255, 255, 0.05)';
+                card.style.background = '#ffffff';
             });
         });
     </script>
