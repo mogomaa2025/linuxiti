@@ -243,6 +243,140 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
+        .user-management-section {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(120, 119, 198, 0.1) 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .security-concepts {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(220, 53, 69, 0.1) 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .security-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .security-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .security-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .security-icon {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .security-card h3 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            font-size: 1.3rem;
+        }
+
+        .concept-item {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .concept-detail {
+            font-size: 0.9rem;
+            color: #b8b8b8;
+            font-style: italic;
+        }
+
+        .passwd-breakdown {
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.1) 0%, rgba(69, 183, 209, 0.1) 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .breakdown-container {
+            margin-top: 2rem;
+        }
+
+        .passwd-example {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .passwd-line {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.1rem;
+            color: #4ecdc4;
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            word-break: break-all;
+        }
+
+        .passwd-fields {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .field-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .field-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.02);
+        }
+
+        .field-label {
+            font-weight: bold;
+            color: #4ecdc4;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .field-value {
+            font-family: 'Fira Code', monospace;
+            color: #fff;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .field-desc {
+            font-size: 0.8rem;
+            color: #b8b8b8;
+        }
+
         .footer {
             background: rgba(0, 0, 0, 0.3);
             padding: 3rem 2rem;
@@ -533,6 +667,148 @@
             </div>
         </div>
 
+        <div class="user-management-section">
+            <h2 class="filesystem-title">👥 User Management & Security</h2>
+            <div class="command-grid">
+                <div class="command-card animate-in">
+                    <div class="command-header">
+                        <div class="command-icon">👤</div>
+                        <div class="command-title">User Information Files</div>
+                    </div>
+                    <div class="command-syntax">cat /etc/passwd</div>
+                    <div class="command-description">
+                        View all user accounts and their configuration details
+                    </div>
+                    <div class="examples">
+                        <div class="example-item"># Format: loginname:x:UID:GID:comment:home:shell</div>
+                        <div class="example-item">root:x:0:0:Super User:/root:/bin/bash</div>
+                        <div class="example-item">gomaa:x:1000:1000:gomaa:/home/gomaa:/bin/bash</div>
+                    </div>
+                </div>
+
+                <div class="command-card animate-in">
+                    <div class="command-header">
+                        <div class="command-icon">🔐</div>
+                        <div class="command-title">Password Shadows</div>
+                    </div>
+                    <div class="command-syntax">sudo cat /etc/shadow</div>
+                    <div class="command-description">
+                        View encrypted password hashes and account policies (requires sudo)
+                    </div>
+                    <div class="examples">
+                        <div class="example-item"># Passwords stored as irreversible hashes</div>
+                        <div class="example-item">gomaa:$y$j9T$hash...</div>
+                        <div class="example-item">bin:*:20186:0:99999:7:::  # Locked account</div>
+                    </div>
+                </div>
+
+                <div class="command-card animate-in">
+                    <div class="command-header">
+                        <div class="command-icon">👥</div>
+                        <div class="command-title">Group Management</div>
+                    </div>
+                    <div class="command-syntax">cat /etc/group</div>
+                    <div class="command-description">
+                        View all groups and their members
+                    </div>
+                    <div class="examples">
+                        <div class="example-item"># Format: groupname:x:GID:members</div>
+                        <div class="example-item">wheel:x:10:gomaa  # Admin group</div>
+                        <div class="example-item">root:x:0:  # Root group</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="security-concepts">
+            <h2 class="filesystem-title">🔒 Security Concepts</h2>
+            <div class="security-grid">
+                <div class="security-card">
+                    <div class="security-icon">📊</div>
+                    <h3>Encoding vs Encryption vs Hashing</h3>
+                    <div class="security-content">
+                        <div class="concept-item">
+                            <strong>🔄 Encoding:</strong> Data ➔ String (reversible)<br>
+                            <span class="concept-detail">Purpose: Data representation, not security</span>
+                        </div>
+                        <div class="concept-item">
+                            <strong>🔐 Encryption:</strong> Data + Key ➔ Encrypted String (reversible with key)<br>
+                            <span class="concept-detail">Purpose: Confidentiality, data protection</span>
+                        </div>
+                        <div class="concept-item">
+                            <strong>#️⃣ Hashing:</strong> Data ➔ Hash (irreversible, one-way)<br>
+                            <span class="concept-detail">Purpose: Integrity, password storage, git commits</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="security-card">
+                    <div class="security-icon">🧂</div>
+                    <h3>Password Security & Salting</h3>
+                    <div class="security-content">
+                        <div class="concept-item">
+                            <strong>Hash Storage:</strong> Passwords never stored in plain text<br>
+                            <span class="concept-detail">System stores hash, compares hash of input</span>
+                        </div>
+                        <div class="concept-item">
+                            <strong>Salting Protection:</strong> Random data + password before hashing<br>
+                            <span class="concept-detail">Prevents rainbow table and brute-force attacks</span>
+                        </div>
+                        <div class="concept-item">
+                            <strong>Modern Algorithm:</strong> $y$ prefix = yescrypt (Argon2-based)<br>
+                            <span class="concept-detail">Strong, slow hashing designed for security</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="passwd-breakdown">
+            <h2 class="filesystem-title">🔍 /etc/passwd Structure</h2>
+            <div class="breakdown-container">
+                <div class="passwd-example">
+                    <div class="passwd-line">gomaa:x:1000:1000:gomaa:/home/gomaa:/bin/bash</div>
+                    <div class="passwd-fields">
+                        <div class="field-item">
+                            <div class="field-label">Username</div>
+                            <div class="field-value">gomaa</div>
+                            <div class="field-desc">Login name</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">Password</div>
+                            <div class="field-value">x</div>
+                            <div class="field-desc">Stored in /etc/shadow</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">UID</div>
+                            <div class="field-value">1000</div>
+                            <div class="field-desc">User ID number</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">GID</div>
+                            <div class="field-value">1000</div>
+                            <div class="field-desc">Primary Group ID</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">Comment</div>
+                            <div class="field-value">gomaa</div>
+                            <div class="field-desc">Full name/info</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">Home Dir</div>
+                            <div class="field-value">/home/gomaa</div>
+                            <div class="field-desc">User's home directory</div>
+                        </div>
+                        <div class="field-item">
+                            <div class="field-label">Shell</div>
+                            <div class="field-value">/bin/bash</div>
+                            <div class="field-desc">Default login shell</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="tips-section">
             <h2 class="filesystem-title">💡 Pro Tips</h2>
             
@@ -559,6 +835,16 @@
             <div class="tip-item">
                 <h3>📁 Directory Operations</h3>
                 <p>Use <code>mkdir -p</code> to create nested directories in one command</p>
+            </div>
+
+            <div class="tip-item">
+                <h3>🔐 System Account Security</h3>
+                <p>Accounts with <code>*</code> in /etc/shadow are locked and cannot login - good security practice for system services</p>
+            </div>
+
+            <div class="tip-item">
+                <h3>🏠 Home Directory Notes</h3>
+                <p>Some system users have no home directory or use <code>/</code> - they don't need interactive access</p>
             </div>
         </div>
     </div>
