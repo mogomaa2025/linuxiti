@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Bash Shell Commands Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e8e8e8;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(255,255,255,0.5); }
+            to { text-shadow: 0 0 40px rgba(255,255,255,0.8); }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .command-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .command-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .command-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .command-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .command-card:hover::before {
+            opacity: 1;
+        }
+
+        .command-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .command-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .command-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .command-syntax {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .command-syntax::before {
+            content: '$ ';
+            color: #4ecdc4;
+            font-weight: bold;
+        }
+
+        .command-description {
+            color: #b8b8b8;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .examples {
+            margin-top: 1.5rem;
+        }
+
+        .example-item {
+            background: rgba(0, 0, 0, 0.2);
+            border-left: 3px solid #4ecdc4;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+        }
+
+        .filesystem-section {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(78, 205, 196, 0.1) 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .filesystem-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 2rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .filesystem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .filesystem-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .filesystem-item:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .filesystem-path {
+            font-family: 'Fira Code', monospace;
+            color: #4ecdc4;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tips-section {
+            background: linear-gradient(135deg, rgba(150, 206, 180, 0.1) 0%, rgba(69, 183, 209, 0.1) 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .tip-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+            border-left: 4px solid #96ceb4;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .tip-item:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .command-grid { grid-template-columns: 1fr; }
+            .container { padding: 1rem; }
+        }
+
+        .animate-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideIn 0.6s ease forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(78, 205, 196, 0.2);
+            border: 1px solid #4ecdc4;
+            color: #4ecdc4;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: rgba(78, 205, 196, 0.3);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-content">
+            <h1>🐧 Linux Bash Shell</h1>
+            <p>Master the command line with this comprehensive guide to essential bash commands</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="command-grid">
+            <div class="command-card animate-in">
+                <div class="command-header">
+                    <div class="command-icon">📁</div>
+                    <div class="command-title">File & Directory Listing</div>
+                </div>
+                <div class="command-syntax">ls [options] [directory]</div>
+                <div class="command-description">
+                    List files and directories with various formatting options
+                </div>
+                <div class="examples">
+                    <div class="example-item">ls -a  # Show hidden files</div>
+                    <div class="example-item">ls -l  # Detailed list format</div>
+                    <div class="example-item">ls -A  # All files except . and ..</div>
+                </div>
+            </div>
+
+            <div class="command-card animate-in">
+                <div class="command-header">
+                    <div class="command-icon">📍</div>
+                    <div class="command-title">Directory Navigation</div>
+                </div>
+                <div class="command-syntax">cd [directory] && pwd</div>
+                <div class="command-description">
+                    Change directories and display current working directory
+                </div>
+                <div class="examples">
+                    <div class="example-item">cd Desktop  # Relative path</div>
+                    <div class="example-item">cd /home/user  # Absolute path</div>
+                    <div class="example-item">pwd  # Show current directory</div>
+                </div>
+            </div>
+
+            <div class="command-card animate-in">
+                <div class="command-header">
+                    <div class="command-icon">🔍</div>
+                    <div class="command-title">File Operations</div>
+                </div>
+                <div class="command-syntax">file [filename]</div>
+                <div class="command-description">
+                    Determine file type and get file information
+                </div>
+                <div class="examples">
+                    <div class="example-item">file Desktop/  # Check if directory</div>
+                    <div class="example-item">file document.txt  # Check file type</div>
+                </div>
+            </div>
+
+            <div class="command-card animate-in">
+                <div class="command-header">
+                    <div class="command-icon">👤</div>
+                    <div class="command-title">User Information</div>
+                </div>
+                <div class="command-syntax">whoami && who</div>
+                <div class="command-description">
+                    Display current user and active login sessions
+                </div>
+                <div class="examples">
+                    <div class="example-item">whoami  # Current username</div>
+                    <div class="example-item">who  # All logged in users</div>
+                </div>
+            </div>
+
+            <div class="command-card animate-in">
+                <div class="command-header">
+                    <div class="command-icon">📂</div>
+                    <div class="command-title">Directory Management</div>
+                </div>
+                <div class="command-syntax">mkdir [options] directory</div>
+                <div class="command-description">
+                    Create and remove directories with various options
+                </div>
+                <div class="examples">
+                    <div class="example-item">mkdir newdir  # Create directory</div>
+                    <div class="example-item">mkdir -p dir1/dir2  # Create hierarchy</div>
+                    <div class="example-item">rmdir newdir  # Remove empty directory</div>
+                </div>
+            </div>
+
+            <div class="command-card animate-in">
+                <div class="command-header">
+                    <div class="command-icon">📄</div>
+                    <div class="command-title">File Creation & Editing</div>
+                </div>
+                <div class="command-syntax">touch filename</div>
+                <div class="command-description">
+                    Create files or update timestamps
+                </div>
+                <div class="examples">
+                    <div class="example-item">touch newfile  # Create empty file</div>
+                    <div class="example-item">touch existing.txt  # Update timestamp</div>
+                </div>
+            </div>
+
+            <div class="command-card animate-in">
+                <div class="command-header">
+                    <div class="command-icon">📋</div>
+                    <div class="command-title">Copy & Move</div>
+                </div>
+                <div class="command-syntax">cp [options] source dest</div>
+                <div class="command-description">
+                    Copy and move files or directories
+                </div>
+                <div class="examples">
+                    <div class="example-item">cp file1 newdir/  # Copy file</div>
+                    <div class="example-item">cp -r dir1 dir2  # Copy directory</div>
+                    <div class="example-item">mv file1 newdir/  # Move file</div>
+                </div>
+            </div>
+
+            <div class="command-card animate-in">
+                <div class="command-header">
+                    <div class="command-icon">🗑️</div>
+                    <div class="command-title">File Removal</div>
+                </div>
+                <div class="command-syntax">rm [options] files</div>
+                <div class="command-description">
+                    Remove files and directories safely
+                </div>
+                <div class="examples">
+                    <div class="example-item">rm file1  # Remove file</div>
+                    <div class="example-item">rm -r directory  # Remove directory</div>
+                    <div class="example-item">rm -rf directory  # Force remove</div>
+                </div>
+            </div>
+
+            <div class="command-card animate-in">
+                <div class="command-header">
+                    <div class="command-icon">📖</div>
+                    <div class="command-title">File Reading</div>
+                </div>
+                <div class="command-syntax">cat | head | tail filename</div>
+                <div class="command-description">
+                    Read file contents in different ways
+                </div>
+                <div class="examples">
+                    <div class="example-item">cat file1  # Read entire file</div>
+                    <div class="example-item">head -n5 file1  # First 5 lines</div>
+                    <div class="example-item">tail -n2 file1  # Last 2 lines</div>
+                </div>
+            </div>
+
+            <div class="command-card animate-in">
+                <div class="command-header">
+                    <div class="command-icon">🔢</div>
+                    <div class="command-title">Word Count</div>
+                </div>
+                <div class="command-syntax">wc [options] filename</div>
+                <div class="command-description">
+                    Count lines, words, and characters in files
+                </div>
+                <div class="examples">
+                    <div class="example-item">wc file1  # Lines, words, bytes</div>
+                    <div class="example-item">wc -l file1  # Line count only</div>
+                    <div class="example-item">wc -w file1  # Word count only</div>
+                </div>
+            </div>
+
+            <div class="command-card animate-in">
+                <div class="command-header">
+                    <div class="command-icon">📜</div>
+                    <div class="command-title">File Paging</div>
+                </div>
+                <div class="command-syntax">more | less filename</div>
+                <div class="command-description">
+                    View large files page by page
+                </div>
+                <div class="examples">
+                    <div class="example-item">more /etc/passwd  # Page through file</div>
+                    <div class="example-item">less file1  # Navigate with arrows</div>
+                </div>
+            </div>
+
+            <div class="command-card animate-in">
+                <div class="command-header">
+                    <div class="command-icon">🕐</div>
+                    <div class="command-title">Date & Time</div>
+                </div>
+                <div class="command-syntax">date</div>
+                <div class="command-description">
+                    Display current date and time
+                </div>
+                <div class="examples">
+                    <div class="example-item">date  # Current date and time</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="filesystem-section">
+            <h2 class="filesystem-title">🗂️ Linux File System</h2>
+            <div class="filesystem-grid">
+                <div class="filesystem-item">
+                    <div class="filesystem-path">/</div>
+                    <div>Root directory - the top of the file system hierarchy</div>
+                </div>
+                <div class="filesystem-item">
+                    <div class="filesystem-path">/boot</div>
+                    <div>Boot files required to start the operating system</div>
+                </div>
+                <div class="filesystem-item">
+                    <div class="filesystem-path">/etc</div>
+                    <div>System configuration files (firewall, users, ports)</div>
+                </div>
+                <div class="filesystem-item">
+                    <div class="filesystem-path">/home</div>
+                    <div>User home directories (like /home/gomaa)</div>
+                </div>
+                <div class="filesystem-item">
+                    <div class="filesystem-path">/root</div>
+                    <div>Root user's home directory</div>
+                </div>
+                <div class="filesystem-item">
+                    <div class="filesystem-path">/usr</div>
+                    <div>User programs and system binaries</div>
+                </div>
+                <div class="filesystem-item">
+                    <div class="filesystem-path">/var</div>
+                    <div>Variable data like logs and databases</div>
+                </div>
+                <div class="filesystem-item">
+                    <div class="filesystem-path">/tmp</div>
+                    <div>Temporary files (cleared on reboot)</div>
+                </div>
+                <div class="filesystem-item">
+                    <div class="filesystem-path">/dev</div>
+                    <div>Device files (hardware interfaces)</div>
+                </div>
+                <div class="filesystem-item">
+                    <div class="filesystem-path">/mnt</div>
+                    <div>Mount point for temporary mounted filesystems</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tips-section">
+            <h2 class="filesystem-title">💡 Pro Tips</h2>
+            
+            <div class="tip-item">
+                <h3>🔗 Command Chaining</h3>
+                <p>Use <code>;</code> to run multiple commands sequentially: <code>ls ; whoami</code></p>
+            </div>
+
+            <div class="tip-item">
+                <h3>👁️ Hidden Files</h3>
+                <p>Files starting with <code>.</code> are hidden. Use <code>ls -a</code> to see them all, or <code>ls -A</code> to exclude . and ..</p>
+            </div>
+
+            <div class="tip-item">
+                <h3>🛣️ Path Types</h3>
+                <p><strong>Relative:</strong> <code>cd Desktop</code> | <strong>Absolute:</strong> <code>cd /home/user/Desktop</code></p>
+            </div>
+
+            <div class="tip-item">
+                <h3>🔄 File Timestamp Tricks</h3>
+                <p><code>touch</code> can modify file timestamps without changing content - be aware of security implications!</p>
+            </div>
+
+            <div class="tip-item">
+                <h3>📁 Directory Operations</h3>
+                <p>Use <code>mkdir -p</code> to create nested directories in one command</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>🚀 Master these commands and you'll navigate Linux like a pro!</p>
+        <p>Happy coding! 💻✨</p>
+    </div>
+
+    <script>
+        // Animate cards on scroll
+        const cards = document.querySelectorAll('.animate-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.animationDelay = `${index * 0.1}s`;
+                        entry.target.classList.add('animate-in');
+                    }, index * 100);
+                }
+            });
+        });
+
+        cards.forEach(card => observer.observe(card));
+
+        // Add copy functionality to code blocks
+        document.querySelectorAll('.command-syntax, .example-item').forEach(block => {
+            block.style.position = 'relative';
+            block.addEventListener('mouseenter', () => {
+                if (!block.querySelector('.copy-btn')) {
+                    const copyBtn = document.createElement('button');
+                    copyBtn.className = 'copy-btn';
+                    copyBtn.textContent = 'Copy';
+                    copyBtn.onclick = () => {
+                        navigator.clipboard.writeText(block.textContent.replace('$ ', ''));
+                        copyBtn.textContent = 'Copied!';
+                        setTimeout(() => copyBtn.textContent = 'Copy', 2000);
+                    };
+                    block.appendChild(copyBtn);
+                }
+            });
+        });
+
+        // Smooth scrolling for better UX
+        document.documentElement.style.scrollBehavior = 'smooth';
+
+        // Add sparkle effect on hover for cards
+        document.querySelectorAll('.command-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.background = 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.background = 'rgba(255, 255, 255, 0.05)';
+            });
+        });
+    </script>
+</body>
+</html>
