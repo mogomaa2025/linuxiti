@@ -376,6 +376,48 @@
             font-size: 0.8rem;
             color: #b8b8b8;
         }
+        
+        /* New Lab Section Styles */
+        .lab-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid #667eea;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .lab-item:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .lab-item h4 {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .lab-item p {
+            color: #b8b8b8;
+            margin-bottom: 1rem;
+        }
+
+        .lab-item code {
+            background: rgba(0,0,0,0.3);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Fira Code', monospace;
+            color: #4ecdc4;
+        }
+
+        .lab-item .explanation {
+            font-style: italic;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            color: #96ceb4;
+        }
 
         .footer {
             background: rgba(0, 0, 0, 0.3);
@@ -667,6 +709,65 @@
             </div>
         </div>
 
+        <!-- NEW LAB SECTION START -->
+        <div class="filesystem-section">
+            <h2 class="filesystem-title">🧪 Practical Lab Walkthrough</h2>
+            <p style="text-align: center; max-width: 800px; margin: -1.5rem auto 2.5rem; color: #b8b8b8;">
+                Apply your knowledge! Here are the step-by-step solutions for a common Linux command-line exercise. (Assuming your username is 'user' and you are starting in your home directory <code>/home/user</code>).
+            </p>
+
+            <div class="lab-item">
+                <h4>Question 2: Create the Directory Hierarchy</h4>
+                <p>To create the directories (including nested ones) and the empty files, we use <code>mkdir -p</code> and <code>touch</code>.</p>
+                <div class="example-item">mkdir -p dir1/dir11 dir1/dir12 doc</div>
+                <div class="example-item">touch dir1/dir11/file1 doc/file2</div>
+                <p class="explanation">The <code>-p</code> flag creates parent directories as needed, so <code>dir1</code> is made automatically when creating its subdirectories.</p>
+            </div>
+
+            <div class="lab-item">
+                <h4>Question 3: Copy /etc/passwd</h4>
+                <p>Use the <code>cp</code> command. The source is <code>/etc/passwd</code> and the destination is your home directory (<code>~</code>) with the new name <code>mypasswd</code>.</p>
+                <div class="example-item">cp /etc/passwd ~/mypasswd</div>
+            </div>
+
+            <div class="lab-item">
+                <h4>Question 4: Rename mypasswd to oldpasswd</h4>
+                <p>The <code>mv</code> (move) command is used for both moving and renaming files.</p>
+                <div class="example-item">mv ~/mypasswd ~/oldpasswd</div>
+            </div>
+
+            <div class="lab-item">
+                <h4>Question 5: Find Absolute and Relative Paths</h4>
+                <p>Given your current directory is <code>/home/user</code>, determine the paths to <code>file2</code>.</p>
+                <p><strong>Absolute Path:</strong> The full path from the root (<code>/</code>).<br><code>/home/user/doc/file2</code></p>
+                <p><strong>Relative Path:</strong> The path from your current location.<br><code>doc/file2</code></p>
+            </div>
+
+            <div class="lab-item">
+                <h4>Question 6: Four Ways to Return Home</h4>
+                <p>If you are in <code>/usr/bin</code>, there are several shortcuts to get back to your home directory.</p>
+                <div class="example-item">cd</div>
+                <div class="example-item">cd ~</div>
+                <div class="example-item">cd $HOME</div>
+                <div class="example-item">cd /home/user  # (Using the explicit absolute path)</div>
+            </div>
+
+            <div class="lab-item">
+                <h4>Question 7: List All Hidden Files</h4>
+                <p>Use <code>ls</code> with the <code>-a</code> flag to show all entries, including those starting with a dot (<code>.</code>).</p>
+                <div class="example-item">ls -a ~</div>
+                <p class="explanation">Use <code>ls -A</code> if you want to see hidden files but exclude the <code>.</code> (current) and <code>..</code> (parent) directory entries.</p>
+            </div>
+
+            <div class="lab-item">
+                <h4>Question 8: Copy a Directory</h4>
+                <p>To copy a directory and its contents, use <code>cp</code> with the <code>-r</code> (recursive) flag. This command copies <code>dir1</code> to your <code>Downloads</code> folder and renames it to <code>dir4</code>.</p>
+                <div class="example-item">cp -r ~/dir1 ~/Downloads/dir4</div>
+                <p class="explanation">Note: This assumes a <code>~/Downloads</code> directory exists. If not, you would create it first with <code>mkdir ~/Downloads</code>.</p>
+            </div>
+        </div>
+        <!-- NEW LAB SECTION END -->
+
         <div class="user-management-section">
             <h2 class="filesystem-title">👥 User Management & Security</h2>
             <div class="command-grid">
@@ -720,6 +821,100 @@
             </div>
         </div>
 
+        <div class="user-management-section">
+            <h2 class="filesystem-title">⚡ Efficient User & Group Management</h2>
+            <p style="text-align: center; max-width: 800px; margin: -1.5rem auto 2.5rem; color: #b8b8b8;">
+                While understanding files like <code>/etc/passwd</code> is crucial, daily user management is done with dedicated commands for efficiency and safety.
+            </p>
+            <div class="command-grid">
+                <div class="command-card animate-in">
+                    <div class="command-header">
+                        <div class="command-icon">✨</div>
+                        <div class="command-title">Add User (useradd)</div>
+                    </div>
+                    <div class="command-syntax">sudo useradd [options] LOGIN</div>
+                    <div class="command-description">
+                        Creates a new user. By default, it creates a home directory and a group with the same name, but leaves the account locked until a password is set.
+                    </div>
+                    <div class="examples">
+                        <div class="example-item">sudo useradd newuser</div>
+                        <div class="example-item"># Check /etc/shadow, you'll see '!' meaning locked</div>
+                        <div class="example-item">sudo cat /etc/shadow | grep newuser # newuser:!:...</div>
+                    </div>
+                </div>
+                <div class="command-card animate-in">
+                    <div class="command-header">
+                        <div class="command-icon">🔑</div>
+                        <div class="command-title">Set Password (passwd)</div>
+                    </div>
+                    <div class="command-syntax">sudo passwd USERNAME</div>
+                    <div class="command-description">
+                        The secure, interactive way to set or change a user's password, which unlocks the account.
+                    </div>
+                    <div class="examples">
+                        <div class="example-item">sudo passwd newuser # Follow prompts</div>
+                    </div>
+                </div>
+                <div class="command-card animate-in">
+                    <div class="command-header">
+                        <div class="command-icon">🔧</div>
+                        <div class="command-title">Modify User (usermod)</div>
+                    </div>
+                    <div class="command-syntax">sudo usermod [options] LOGIN</div>
+                    <div class="command-description">
+                        Modify an existing user's attributes, such as groups, comment/full name, or shell. Use <code>-aG</code> to append to groups.
+                    </div>
+                    <div class="examples">
+                        <div class="example-item">sudo usermod -aG wheel newuser # Add user to wheel group</div>
+                        <div class="example-item">sudo usermod -c "New User" newuser # Change comment</div>
+                        <div class="example-item">sudo usermod -L newuser # Lock the account</div>
+                        <div class="example-item">sudo usermod -U newuser # Unlock the account</div>
+                    </div>
+                </div>
+                <div class="command-card animate-in">
+                    <div class="command-header">
+                        <div class="command-icon">❌</div>
+                        <div class="command-title">Remove User (userdel)</div>
+                    </div>
+                    <div class="command-syntax">sudo userdel [options] LOGIN</div>
+                    <div class="command-description">
+                        Deletes a user account. The <code>-r</code> flag is crucial to also remove the user's home directory.
+                    </div>
+                    <div class="examples">
+                        <div class="example-item">sudo userdel -r newuser # Removes user and their data</div>
+                    </div>
+                </div>
+                <div class="command-card animate-in">
+                    <div class="command-header">
+                        <div class="command-icon">➕</div>
+                        <div class="command-title">Add Group (groupadd)</div>
+                    </div>
+                    <div class="command-syntax">sudo groupadd [options] GROUP</div>
+                    <div class="command-description">
+                        Creates a new group. You can add existing users to the new group upon creation.
+                    </div>
+                    <div class="examples">
+                        <div class="example-item">sudo groupadd developers # Create a new group</div>
+                        <div class="example-item">sudo groupadd -U gomaa newgroup # Create group and add user</div>
+                    </div>
+                </div>
+                <div class="command-card animate-in">
+                    <div class="command-header">
+                        <div class="command-icon">🆔</div>
+                        <div class="command-title">Check User ID (id)</div>
+                    </div>
+                    <div class="command-syntax">id [USERNAME]</div>
+                    <div class="command-description">
+                        Displays comprehensive user and group ID information (uid, gid, and all group memberships) for a specified user.
+                    </div>
+                    <div class="examples">
+                        <div class="example-item">id gomaa</div>
+                        <div class="example-item"># uid=1000(gomaa) gid=1000(gomaa) groups=...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="security-concepts">
             <h2 class="filesystem-title">🔒 Security Concepts</h2>
             <div class="security-grid">
@@ -839,7 +1034,7 @@
 
             <div class="tip-item">
                 <h3>🔐 System Account Security</h3>
-                <p>Accounts with <code>*</code> in /etc/shadow are locked and cannot login - good security practice for system services</p>
+                <p>Accounts with <code>*</code> or <code>!</code> in /etc/shadow are locked and cannot log in - good security practice for system services.</p>
             </div>
 
             <div class="tip-item">
@@ -878,12 +1073,24 @@
                     const copyBtn = document.createElement('button');
                     copyBtn.className = 'copy-btn';
                     copyBtn.textContent = 'Copy';
-                    copyBtn.onclick = () => {
-                        navigator.clipboard.writeText(block.textContent.replace('$ ', ''));
+                    copyBtn.onclick = (e) => {
+                        e.stopPropagation(); // Prevent card click events
+                        let textToCopy = block.textContent.replace('Copy', '').trim();
+                        // Remove the leading dollar sign for command syntax blocks
+                        if (block.classList.contains('command-syntax')) {
+                           textToCopy = textToCopy.replace(/^\$\s*/, '');
+                        }
+                        navigator.clipboard.writeText(textToCopy);
                         copyBtn.textContent = 'Copied!';
                         setTimeout(() => copyBtn.textContent = 'Copy', 2000);
                     };
                     block.appendChild(copyBtn);
+                }
+            });
+            block.addEventListener('mouseleave', () => {
+                const copyBtn = block.querySelector('.copy-btn');
+                if (copyBtn) {
+                    copyBtn.remove();
                 }
             });
         });
