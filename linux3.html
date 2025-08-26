@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux3 Lecture + Lab</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #eef2f7 100%);
+            color: #334155;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            color: #e0faff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section-wrapper {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(245, 247, 250, 0.5) 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.03), 0 4px 6px -2px rgba(0,0,0,0.03);
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            background: linear-gradient(45deg, #43cea2, #185a9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .command-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .command-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.05);
+        }
+
+        .command-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            border-color: #cbd5e1;
+        }
+
+        .command-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .command-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .command-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .command-description {
+            color: #475569;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .example-item {
+            background: #f8fafc;
+            border-left: 3px solid #43cea2;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            position: relative;
+            overflow-x: auto;
+        }
+        
+        .explanation {
+            font-style: italic;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            color: #3b82f6;
+            background-color: #eff6ff;
+            padding: 0.75rem;
+            border-radius: 8px;
+            border-left: 3px solid #3b82f6;
+        }
+
+        .lab-item {
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid #667eea;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .lab-item:hover {
+            transform: translateX(10px);
+            background: #f8fafc;
+        }
+
+        .lab-item h4 {
+            font-size: 1.2rem;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .lab-item p {
+            color: #475569;
+            margin-bottom: 1rem;
+        }
+        
+        .footer {
+            background: #e2e8f0;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid #cbd5e1;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: #e0f2f1;
+            border: 1px solid #b2dfdb;
+            color: #00796b;
+            padding: 0.3rem 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            opacity: 0;
+        }
+        
+        .example-item:hover .copy-btn {
+            opacity: 1;
+        }
+
+        .copy-btn:hover {
+            background: #b2dfdb;
+            transform: scale(1.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid #e2e8f0;
+        }
+
+        th {
+            background-color: #f8fafc;
+            font-weight: 600;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            background-color: #eef2f7;
+            padding: 2px 5px;
+            border-radius: 4px;
+            color: #1e293b;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>🐧 Linux3 Lecture + Lab</h1>
+    </div>
+
+    <div class="container">
+
+        <!-- User & Privilege Management Section -->
+        <div class="section-wrapper">
+            <h2 class="section-title">👤 User & Privilege Management</h2>
+            <div class="command-grid">
+                <div class="command-card">
+                    <div class="command-header"><div class="command-icon">🔄</div><div class="command-title">Switching Users (su)</div></div>
+                    <div class="command-description">The <code>su</code> command allows you to switch to another user account, including the root superuser.</div>
+                    <div class="example-item">su -</div>
+                    <p class="explanation">Using <code>su -</code> (with a hyphen) is recommended. It simulates a full login, sourcing the new user's profile and changing the directory to their home. Plain <code>su</code> only switches the user ID, keeping your old environment.</p>
+                </div>
+                <div class="command-card">
+                    <div class="command-header"><div class="command-icon">⚡</div><div class="command-title">Elevated Privileges (sudo)</div></div>
+                    <div class="command-description"><code>sudo</code> (superuser do) executes a single command with root privileges, without requiring a full shell switch. It's the modern, secure way to perform administrative tasks.</div>
+                    <div class="example-item">sudo ls /</div>
+                    <p class="explanation">Access is managed by the <code>/etc/sudoers</code> file. This provides better security and accountability than sharing the root password.</p>
+                </div>
+                <div class="command-card">
+                    <div class="command-header"><div class="command-icon">⏳</div><div class="command-title">Account Aging (chage)</div></div>
+                    <div class="command-description">The <code>chage</code> command manages password and account expiry policies, enhancing security by enforcing regular password changes.</div>
+                    <div class="example-item">sudo chage -l username</div>
+                    <div class="example-item">sudo chage -E 2025-12-31 username</div>
+                    <p class="explanation"><code>-l</code> lists current aging info. <code>-E</code> sets an account expiration date. Other flags control max/min password age and warning days.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Standard Permissions Section -->
+        <div class="section-wrapper">
+            <h2 class="section-title">🔐 Standard File Permissions</h2>
+            <div class="command-grid">
+                <div class="command-card">
+                    <div class="command-header"><div class="command-icon">📊</div><div class="command-title">Understanding Permissions</div></div>
+                    <div class="command-description">Linux permissions are defined for three levels: <strong>User</strong> (owner), <strong>Group</strong>, and <strong>Other</strong>. Each level can have Read (r=4), Write (w=2), and Execute (x=1) permissions.</div>
+                    <p class="explanation">An example like <code>-rwxr-xr--</code> means the owner can read/write/execute (4+2+1=7), the group can read/execute (4+1=5), and others can only read (4). This is represented octally as <code>755</code>.</p>
+                </div>
+                <div class="command-card">
+                    <div class="command-header"><div class="command-icon">🔧</div><div class="command-title">Change Mode (chmod)</div></div>
+                    <div class="command-description"><code>chmod</code> modifies the permissions of files and directories using symbolic or octal notation.</div>
+                    <div class="example-item">chmod g+w script.sh  # Symbolic: Add write for group</div>
+                    <div class="example-item">chmod 755 script.sh  # Octal: rwx for owner, r-x for group/other</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-header"><div class="command-icon">👑</div><div class="command-title">Change Ownership (chown)</div></div>
+                    <div class="command-description"><code>chown</code> changes the user and/or group owner of a file or directory. This typically requires root privileges.</div>
+                    <div class="example-item">sudo chown newuser file.txt</div>
+                    <div class="example-item">sudo chown user:group file.txt # Change both</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Special Permissions Section -->
+        <div class="section-wrapper">
+            <h2 class="section-title">✨ Special Permissions</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Permission</th>
+                        <th>Octal</th>
+                        <th>Symbolic</th>
+                        <th>Effect</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>SetUID (SUID)</strong></td>
+                        <td><code>4</code></td>
+                        <td><code>s</code> (owner 'x')</td>
+                        <td>Executable runs with the permissions of the <strong>file owner</strong>, not the user running it. (e.g., <code>passwd</code> command)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SetGID (SGID)</strong></td>
+                        <td><code>2</code></td>
+                        <td><code>s</code> (group 'x')</td>
+                        <td>On files, runs with group permissions. On directories, new files/folders created inside <strong>inherit the directory's group</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sticky Bit</strong></td>
+                        <td><code>1</code></td>
+                        <td><code>t</code> (other 'x')</td>
+                        <td>On directories, prevents users from deleting files they don't own, even with write permissions. (e.g., <code>/tmp</code> directory)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="command-grid">
+                 <div class="command-card">
+                    <div class="command-header"><div class="command-icon">🔑</div><div class="command-title">Setting Special Permissions</div></div>
+                    <div class="command-description">You can set these with symbolic or octal modes. The octal value is prepended to the standard three digits.</div>
+                    <div class="example-item">chmod u+s my_script  # Set SUID symbolically</div>
+                    <div class="example-item">chmod 4755 my_script # Set SUID octally</div>
+                    <div class="example-item">chmod g+s /shared_folder # Set SGID on a directory</div>
+                    <div class="example-item">chmod 1777 /tmp # Set Sticky Bit on /tmp</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Access Control Lists (ACLs) -->
+        <div class="section-wrapper">
+            <h2 class="section-title">📜 Access Control Lists (ACLs)</h2>
+            <div class="command-grid">
+                <div class="command-card">
+                    <div class="command-header"><div class="command-icon">👁️</div><div class="command-title">View ACLs (getfacl)</div></div>
+                    <div class="command-description">ACLs provide fine-grained control beyond the standard u/g/o model. Use <code>getfacl</code> to view a file's ACL. A <code>+</code> in <code>ls -l</code> output indicates an ACL is present.</div>
+                    <div class="example-item">getfacl file.txt</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-header"><div class="command-icon">✍️</div><div class="command-title">Modify ACLs (setfacl)</div></div>
+                    <div class="command-description">Use <code>setfacl</code> to add, modify, or remove specific permissions for any user or group.</div>
+                    <div class="example-item"># Give 'alice' read-write access
+setfacl -m u:alice:rw file.txt</div>
+                    <div class="example-item"># Remove all ACLs from a file
+setfacl -b file.txt</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- I/O Redirection & Pipelines -->
+        <div class="section-wrapper">
+            <h2 class="section-title">🌊 I/O, Pipes & Redirection</h2>
+            <div class="command-grid">
+                <div class="command-card">
+                    <div class="command-header"><div class="command-icon">↪️</div><div class="command-title">Redirection</div></div>
+                    <div class="command-description">Control where a command's output goes or its input comes from.</div>
+                    <div class="example-item">ls > file_list.txt      # Overwrite file with output</div>
+                    <div class="example-item">date >> log.txt         # Append output to file</div>
+                    <div class="example-item">grep "error" log 2> /dev/null # Hide errors</div>
+                    <div class="example-item">ls -R / &> full_list.txt  # Redirect stdout & stderr</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-header"><div class="command-icon">⛓️</div><div class="command-title">Pipes and Tee</div></div>
+                    <div class="command-description">The pipe <code>|</code> sends the output of one command to the input of another. <code>tee</code> splits the stream, saving it to a file while also passing it along the pipeline.</div>
+                    <div class="example-item"># List all files, save the list, then search it
+ls -R /home/ 2>/dev/null | tee file_list.txt | grep "report.pdf"</div>
+                </div>
+                <div class="command-card">
+                    <div class="command-header"><div class="command-icon">🎭</div><div class="command-title">Default Permissions (umask)</div></div>
+                    <div class="command-description">The <code>umask</code> command sets the default permission mask for newly created files and directories by "subtracting" from the system defaults.</div>
+                    <div class="example-item">umask 0022  # Default: group/other can't write</div>
+                    <div class="example-item">umask 0000  # Permissive: all permissions enabled</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Exercise Section -->
+        <div class="section-wrapper">
+            <h2 class="section-title">🧪 Lab Exercise: Test Your Knowledge</h2>
+            
+            <div class="lab-item">
+                <h4>1. What are the default permissions set for a newly created file or directory in Linux?</h4>
+                <p>Default permissions are determined by the system's base values minus the current <code>umask</code> setting.
+                   <br>• <strong>Base for Directories:</strong> <code>777</code> (rwxrwxrwx)
+                   <br>• <strong>Base for Files:</strong> <code>666</code> (rw-rw-rw-)
+                </p>
+                <p class="explanation">With a common <code>umask</code> of <code>0022</code>, a new directory gets <code>755</code> (rwxr-xr-x) and a new file gets <code>644</code> (rw-r--r--).</p>
+            </div>
+
+            <div class="lab-item">
+                <h4>2. Allow all users on the system to access and create files on /var using the sticky bit.</h4>
+                <div class="example-item">sudo chmod +t /var</div>
+                <p class="explanation"><strong>Warning:</strong> This is for educational purposes only. Modifying system directory permissions like <code>/var</code> is dangerous. The sticky bit allows users to create files but only lets the file's owner (or root) delete or rename them.</p>
+            </div>
+
+            <div class="lab-item">
+                <h4>3. Display the uptime of your system (mention two ways).</h4>
+                <div class="example-item">uptime</div>
+                <div class="example-item">top  # Uptime is on the first line</div>
+            </div>
+
+            <div class="lab-item">
+                <h4>4. Use a pipe to display only the first 5 lines of the output of the ls -l command.</h4>
+                <div class="example-item">ls -l | head -n 5</div>
+            </div>
+
+            <div class="lab-item">
+                <h4>5. Use the tee command to save the output of df -h to a file called disk_usage.txt while still displaying it on the screen.</h4>
+                <div class="example-item">df -h | tee disk_usage.txt</div>
+            </div>
+
+            <div class="lab-item">
+                <h4>6. Give the user student read and write access to a file called report.txt using Access Control Lists (ACLs).</h4>
+                <div class="example-item">setfacl -m u:student:rw report.txt</div>
+            </div>
+
+            <div class="lab-item">
+                <h4>7. Create a folder called myteam, change its permissions to read-only for the owner, and test access from another user.</h4>
+                <p>A "read-only" directory for the owner requires read (r) and execute (x) permissions to be able to list and enter it.</p>
+                <div class="example-item">mkdir ~/myteam</div>
+                <div class="example-item">chmod 500 ~/myteam  # Gives r-x for owner only</div>
+                <p class="explanation">After logging in as another user, trying <code>cd /home/your_user/myteam</code> will result in a "Permission denied" error because 'others' have no permissions.</p>
+            </div>
+            
+            <div class="lab-item">
+                <h4>8. Advanced permissions and umask.</h4>
+                <p><strong>Change permissions of oldpasswd (owner→rw, group→wx, others→x):</strong></p>
+                <div class="example-item"># Octal Method (631)
+chmod 631 oldpasswd</div>
+                <div class="example-item"># Symbolic Method
+chmod u=rw,g=wx,o=x oldpasswd</div>
+
+                <p><strong>Change umask to enforce the same:</strong></p>
+                <div class="example-item"># (666 - 631 = 035)
+umask 0035</div>
+
+                <p><strong>Maximum default permissions:</strong> A file is <code>666</code> (rw-rw-rw-), a directory is <code>777</code> (rwxrwxrwx).</p>
+
+                <p><strong>Change umask to no permissions for everyone:</strong></p>
+                <div class="example-item">umask 0777</div>
+                <div class="example-item">touch newfile; mkdir newdir; ls -l</div>
+                <p class="explanation">This will create files and directories with zero permissions (<code>----------</code> and <code>d---------</code>).</p>
+            </div>
+
+            <div class="lab-item">
+                <h4>9. What is the minimum permission needed for...?</h4>
+                <p>• <strong>Copy a directory:</strong> <code>r-x</code> on the source directory and its contents; <code>--x</code> on the target's parent directory.<br>
+                   • <strong>Copy a file:</strong> <code>r--</code> on the source file; <code>--x</code> on the target's parent directory.<br>
+                   • <strong>Delete a file:</strong> <code>-wx</code> on the parent directory containing the file.<br>
+                   • <strong>Change to a directory (cd):</strong> <code>--x</code> on the directory.<br>
+                   • <strong>List directory contents (ls):</strong> <code>r--</code> on the directory.<br>
+                   • <strong>View file content (cat):</strong> <code>r--</code> on the file.<br>
+                   • <strong>Modify file content:</strong> <code>-w-</code> on the file.
+                </p>
+            </div>
+
+            <div class="lab-item">
+                <h4>10. Create a file with permission 444. Try to edit it and to remove it.</h4>
+                <div class="example-item">touch testfile; chmod 444 testfile</div>
+                <div class="example-item">echo "hello" > testfile  # This will fail with "Permission denied"</div>
+                <div class="example-item">rm testfile               # This will work (after a prompt)</div>
+                <p class="explanation">You can't edit the file because you lack write permission on the file itself. You can delete it because deletion is controlled by the permissions of the parent directory (which you own).</p>
+            </div>
+
+            <div class="lab-item">
+                <h4>11. What is the difference between the x permission for a file and for a directory?</h4>
+                <p>• <strong>For a File:</strong> The 'x' permission means the file is <strong>executable</strong> and can be run as a program or script.<br>
+                   • <strong>For a Directory:</strong> The 'x' permission means the directory is <strong>traversable</strong> (or searchable). It allows you to enter the directory with <code>cd</code> and access files and subdirectories within it.
+                </p>
+            </div>
+            
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <p>Eng. Mohamed Gomaa! 💻✨</p>
+    </div>
+
+    <script>
+        // Copy functionality for code blocks
+        document.querySelectorAll('.example-item').forEach(block => {
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'copy-btn';
+            copyBtn.textContent = 'Copy';
+            copyBtn.onclick = (e) => {
+                e.stopPropagation();
+                let textToCopy = block.textContent.replace('Copy', '').trim();
+                // Remove comment lines for cleaner copying
+                textToCopy = textToCopy.split('\n').filter(line => !line.trim().startsWith('#')).join('\n');
+                navigator.clipboard.writeText(textToCopy);
+                copyBtn.textContent = 'Copied!';
+                setTimeout(() => copyBtn.textContent = 'Copy', 2000);
+            };
+            block.appendChild(copyBtn);
+        });
+    </script>
+</body>
+</html>
