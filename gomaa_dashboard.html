@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing Team Statistics Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+            --info: #2196f3;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 2rem;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 3rem;
+            border-radius: 50px;
+            border: none;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow);
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        /* Navigation */
+        nav {
+            background-color: white;
+            padding: 0.75rem 0;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links li {
+            cursor: pointer;
+            padding: 0.5rem 0;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links li:hover {
+            color: var(--primary);
+        }
+
+        .nav-links li.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+        }
+
+        /* Dashboard Content */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray);
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .card-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-text {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .primary-bg {
+            background-color: var(--primary);
+        }
+
+        .success-bg {
+            background-color: var(--success);
+        }
+
+        .warning-bg {
+            background-color: var(--warning);
+        }
+
+        .info-bg {
+            background-color: var(--info);
+        }
+
+        /* Charts Section */
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+
+        /* Statistics Section */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .stat-list {
+            list-style: none;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .stat-name {
+            font-weight: 500;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Table Section */
+        .table-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .table-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .filter-options {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .filter-select {
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background-color: white;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: var(--light);
+            font-weight: 600;
+            color: var(--gray);
+            cursor: pointer;
+            position: relative;
+        }
+
+        th:hover {
+            background-color: #e9ecef;
+        }
+
+        th i {
+            margin-left: 5px;
+            font-size: 0.8rem;
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 0.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .tag-manual {
+            background-color: #e3f2fd;
+            color: #0277bd;
+        }
+
+        .tag-automation {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .tag-api {
+            background-color: #fff3e0;
+            color: #e65100;
+        }
+
+        .tag-performance {
+            background-color: #f3e5f5;
+            color: #6a1b9a;
+        }
+
+        .tag-security {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+
+        .tag-none {
+            background-color: #f5f5f5;
+            color: #616161;
+        }
+
+        .tag-moderator {
+            background-color: #e0f7fa;
+            color: #00838f;
+        }
+
+        .tag-scripter {
+            background-color: #e8eaf6;
+            color: #303f9f;
+        }
+
+        .tag-google-forms {
+            background-color: #e0f2f1;
+            color: #00695c;
+        }
+
+        .tag-other {
+            background-color: #fafafa;
+            color: #424242;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .search-bar {
+                margin: 0;
+                max-width: 100%;
+            }
+
+            .nav-links {
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+            }
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+
+            .table-container {
+                overflow-x: scroll;
+            }
+
+            .filter-options {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Section Visibility */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Loading indicator */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray);
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Testing Team Statistics</span>
+                </div>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="global-search" placeholder="Search members, branches, specializations...">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li class="nav-link active" data-section="overview">Overview</li>
+                <li class="nav-link" data-section="specializations">Specializations</li>
+                <li class="nav-link" data-section="help-areas">Help Areas</li>
+                <li class="nav-link" data-section="branches">Branches</li>
+                <li class="nav-link" data-section="table">Table View</li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Overview Section -->
+        <section id="overview" class="section active">
+            <div class="dashboard">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Total Members</div>
+                            <div class="card-value">84</div>
+                            <div class="card-text">Across all branches</div>
+                        </div>
+                        <div class="card-icon primary-bg">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Branches</div>
+                            <div class="card-value">6</div>
+                            <div class="card-text">Different locations</div>
+                        </div>
+                        <div class="card-icon success-bg">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Specializations</div>
+                            <div class="card-value">5</div>
+                            <div class="card-text">Testing areas</div>
+                        </div>
+                        <div class="card-icon warning-bg">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">Help Areas</div>
+                            <div class="card-value">15+</div>
+                            <div class="card-text">Support categories</div>
+                        </div>
+                        <div class="card-icon info-bg">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="charts-container">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Branch Distribution</div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="branchChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Specialization Distribution</div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="specializationChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="charts-container">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Help Areas Distribution</div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="helpAreasChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Specialization vs Help Areas</div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="correlationChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Specializations Section -->
+        <section id="specializations" class="section">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-title">Specialization Statistics</div>
+                    <ul class="stat-list" id="specialization-stats">
+                        <li class="loading"><div class="spinner"></div>Loading...</li>
+                    </ul>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-title">Top Specializations by Branch</div>
+                    <ul class="stat-list" id="branch-specialization-stats">
+                        <li class="loading"><div class="spinner"></div>Loading...</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="charts-container">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Specialization Breakdown</div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="specializationBreakdownChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Specialization Distribution by Branch</div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="branchSpecializationChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Help Areas Section -->
+        <section id="help-areas" class="section">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-title">Help Areas Statistics</div>
+                    <ul class="stat-list" id="help-areas-stats">
+                        <li class="loading"><div class="spinner"></div>Loading...</li>
+                    </ul>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-title">Top Help Areas by Branch</div>
+                    <ul class="stat-list" id="branch-help-stats">
+                        <li class="loading"><div class="spinner"></div>Loading...</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="charts-container">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Help Areas Breakdown</div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="helpAreasBreakdownChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Help Areas Distribution by Branch</div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="branchHelpChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Branches Section -->
+        <section id="branches" class="section">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-title">Branch Statistics</div>
+                    <ul class="stat-list" id="branch-stats">
+                        <li class="loading"><div class="spinner"></div>Loading...</li>
+                    </ul>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-title">Member Distribution</div>
+                    <ul class="stat-list" id="member-distribution-stats">
+                        <li class="loading"><div class="spinner"></div>Loading...</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="charts-container">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Branch Member Distribution</div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="branchMemberChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">Branch Specialization Mix</div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="branchMixChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Table View Section -->
+        <section id="table" class="section">
+            <div class="table-container">
+                <div class="table-header">
+                    <div class="table-title">Team Members Table</div>
+                    <div class="filter-options">
+                        <select class="filter-select" id="table-branch-filter">
+                            <option value="all">All Branches</option>
+                            <option value="Nasr City">Nasr City</option>
+                            <option value="New Capital">New Capital</option>
+                            <option value="Zagazig">Zagazig</option>
+                            <option value="Alexandria">Alexandria</option>
+                            <option value="Ismailia">Ismailia</option>
+                        </select>
+                        <select class="filter-select" id="table-specialization-filter">
+                            <option value="all">All Specializations</option>
+                            <option value="Manual">Manual</option>
+                            <option value="Automation">Automation</option>
+                            <option value="API">API</option>
+                            <option value="Performance">Performance</option>
+                            <option value="Security">Security</option>
+                        </select>
+                    </div>
+                </div>
+
+                <table id="members-table">
+                    <thead>
+                        <tr>
+                            <th>ID <i class="fas fa-sort"></i></th>
+                            <th>Name <i class="fas fa-sort"></i></th>
+                            <th>Branch <i class="fas fa-sort"></i></th>
+                            <th>Specializations <i class="fas fa-sort"></i></th>
+                            <th>Help Areas <i class="fas fa-sort"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <tr>
+                            <td colspan="5" class="loading"><div class="spinner"></div>Loading table data...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Data processing
+        const rawData = [
+            { id: 1, name: "Ahmed Taha Ahmed", branch: "Nasr City", specializations: "Manual", helpAreas: "Not specified" },
+            { id: 2, name: "Abdelrahman khaled m. h. hemmat", branch: "New Capital", specializations: "Manual, Automation", helpAreas: "Scripter, Google Forms" },
+            { id: 3, name: "Adel Elmy Mahmoud", branch: "Nasr City", specializations: "Manual", helpAreas: "Google Forms" },
+            { id: 4, name: "احمد محمد توفيق (Ahmed M. Tawfik)", branch: "Ismailia", specializations: "Manual", helpAreas: "Moderators, Software Engineering" },
+            { id: 5, name: "Ahmed Hany Abohashim", branch: "Zagazig", specializations: "Manual, API", helpAreas: "Scripter, Moderators" },
+            { id: 6, name: "علاء محمد نجيب (Alaa Mohamed Naguib)", branch: "Zagazig", specializations: "None", helpAreas: "ISTQB Study" },
+            { id: 7, name: "Ali Ahmed Saeed", branch: "New Capital", specializations: "Manual, Automation", helpAreas: "Testing" },
+            { id: 8, name: "Alshaimaa Mosaad Elsaid", branch: "Ismailia", specializations: "Manual, Automation, API", helpAreas: "Scripter, Moderators, Google Forms, Bug Reporting, Excel, MS Office" },
+            { id: 9, name: "Amira Ahmed Saeed", branch: "Alexandria", specializations: "Manual", helpAreas: "Google Forms" },
+            { id: 10, name: "Amr Ebrahim Salama", branch: "New Capital", specializations: "Manual, Performance", helpAreas: "Scripter" },
+            { id: 11, name: "عمرو محمد سلطان (Amr Mohamed Sultan)", branch: "New Capital", specializations: "None", helpAreas: "Scripter" },
+            { id: 12, name: "اندرو هانی ودیع (Andrew Hany Wadie)", branch: "New Capital", specializations: "Manual, API", helpAreas: "Presentation, Test Cases/Scenarios" },
+            { id: 13, name: "Basma mohamed saad", branch: "Zagazig", specializations: "Manual, Security", helpAreas: "Scripter" },
+            { id: 14, name: "Christina Ihab Fouad", branch: "New Capital", specializations: "None", helpAreas: "Scripter" },
+            { id: 15, name: "Ebrahim mohamed ali", branch: "Alexandria", specializations: "Manual", helpAreas: "Scripter" },
+            { id: 16, name: "Eman Muhammed Abdo", branch: "New Capital", specializations: "Manual", helpAreas: "Manual Testing" },
+            { id: 17, name: "Esraa Gamal Mohamed", branch: "New Capital", specializations: "Manual", helpAreas: "Not specified" },
+            { id: 18, name: "Esraa Mohamed Atya", branch: "Zagazig", specializations: "Manual", helpAreas: "Moderators, Google Forms" },
+            { id: 19, name: "Fatma Abdelraheem Elsayed Eltahan", branch: "Zagazig", specializations: "Manual", helpAreas: "Other" },
+            { id: 20, name: "Fatma alzhraa fouad fayed", branch: "Alexandria", specializations: "Manual, API", helpAreas: "Moderators" },
+            { id: 21, name: "Guirguis Nashat Zaki", branch: "Alexandria", specializations: "Manual", helpAreas: "Moderators, Google Forms" },
+            { id: 22, name: "Habiba Ragab Abdelmoneam", branch: "New Capital", specializations: "Manual", helpAreas: "Canva Presentations" },
+            { id: 23, name: "هاجر أحمد مبروك (Hagar Mabrouk)", branch: "Zagazig", specializations: "Manual, API", helpAreas: "Moderators" },
+            { id: 24, name: "Hanan Reda makram", branch: "New Capital", specializations: "None", helpAreas: "Videographer" },
+            { id: 25, name: "Hany Said Abokhadiga", branch: "Alexandria", specializations: "Manual", helpAreas: "Google Forms" },
+            { id: 26, name: "Hesham ahmed salah", branch: "New Capital", specializations: "Manual", helpAreas: "Moderators" },
+            { id: 27, name: "Hesham Henry Sedky", branch: "Nasr City", specializations: "Not specified", helpAreas: "Moderators" },
+            { id: 28, name: "Hoda Mohamed mahmoud", branch: "New Capital", specializations: "None", helpAreas: "Moderators" },
+            { id: 29, name: "Jasmine Mohamed Ahmed", branch: "Alexandria", specializations: "Manual", helpAreas: "Scripter" },
+            { id: 30, name: "Kareem ehab mohamed", branch: "Nasr City", specializations: "Manual", helpAreas: "Scripter, Google Forms" },
+            { id: 31, name: "خالد محمد حسن (Khaled Mohamed Hassan)", branch: "New Capital", specializations: "None", helpAreas: "Not specified" },
+            { id: 32, name: "Khaled Tarek Fathy", branch: "Zagazig", specializations: "Manual", helpAreas: "Data Gathering, PowerPoint, Leadership" },
+            { id: 33, name: "Lougina Ehab Abd ElWahab", branch: "Alexandria", specializations: "None", helpAreas: "Not specified" },
+            { id: 34, name: "Mahmoud ibrahim", branch: "Alexandria", specializations: "Manual, Automation", helpAreas: "Not specified" },
+            { id: 35, name: "Mahmoud Mamdouh Fathii", branch: "New Capital", specializations: "Manual", helpAreas: "Marketing Management" },
+            { id: 36, name: "Mahmoud Moussa Mohamed", branch: "New Capital", specializations: "Automation", helpAreas: "Google Forms" },
+            { id: 37, name: "Mai Ibrahim Bayoumi", branch: "Alexandria", specializations: "Manual", helpAreas: "Google Forms" },
+            { id: 38, name: "Mariam maher hassan", branch: "New Capital", specializations: "Manual", helpAreas: "Not specified" },
+            { id: 39, name: "Mariam Milad Mofeed", branch: "New Capital", specializations: "Manual, Automation", helpAreas: "Scripter, Google Forms" },
+            { id: 40, name: "Marwan ayman abdelrahman", branch: "New Capital", specializations: "Manual, API", helpAreas: "Not specified" },
+            { id: 41, name: "Mina Kamel Nasef", branch: "Ismailia", specializations: "Manual, API", helpAreas: "Moderators" },
+            { id: 42, name: "Mina Khalifa Gendy", branch: "Nasr City", specializations: "Manual", helpAreas: "Moderators" },
+            { id: 43, name: "Miran Eid Hassan", branch: "Alexandria", specializations: "Manual, API", helpAreas: "Moderators" },
+            { id: 44, name: "moheb ashraf shaker", branch: "New Capital", specializations: "Manual", helpAreas: "Scripter, Google Forms" },
+            { id: 45, name: "Mohamed Abdelhamed Abdullah", branch: "Ismailia", specializations: "Automation", helpAreas: "Video Editing" },
+            { id: 46, name: "Mohamed Ahmed Kamal", branch: "Ismailia", specializations: "Manual, API", helpAreas: "Not specified" },
+            { id: 47, name: "محمد احمد جمعة (Mohamed Ahmed Gomaa)", branch: "Alexandria", specializations: "Manual, Automation", helpAreas: "Google Forms" },
+            { id: 48, name: "محمد عاصم فاروق (Mohamed Assem)", branch: "Alexandria", specializations: "None", helpAreas: "Not specified" },
+            { id: 49, name: "Mohamed Elmy Mahmoud", branch: "Nasr City", specializations: "Manual", helpAreas: "Scripter, Google Forms" },
+            { id: 50, name: "محمد احمد فتيحه (Mohamed Fatiha)", branch: "Alexandria", specializations: "None", helpAreas: "Moderators" },
+            { id: 51, name: "Mohamed Mostafa Abdel Razek", branch: "Ismailia", specializations: "Manual, API", helpAreas: "Not specified" },
+            { id: 52, name: "Mohamed Tamer Essam", branch: "Nasr City", specializations: "None", helpAreas: "Video Editing" },
+            { id: 53, name: "Mostafa abdelaziz Al-hashemy", branch: "Nasr City", specializations: "Manual", helpAreas: "Not specified" },
+            { id: 54, name: "مصطفى جمال شحاته (Mostafa Gamal)", branch: "New Capital", specializations: "Manual, Automation", helpAreas: "Technical Testing" },
+            { id: 55, name: "Muhammad El-Mahdy Muhammad", branch: "New Capital", specializations: "Manual, Automation", helpAreas: "Moderators" },
+            { id: 56, name: "Muhammed Sherif Attia", branch: "Zagazig", specializations: "Manual", helpAreas: "Presentations" },
+            { id: 57, name: "Nadeen alaa abdelhamed", branch: "New Capital", specializations: "None", helpAreas: "Not specified" },
+            { id: 58, name: "Nadia Mohamed Abdelrahman", branch: "Ismailia", specializations: "Not specified", helpAreas: "Not specified" },
+            { id: 59, name: "ندى اشرف محمد (Nada Ashraf Mohamed)", branch: "Ismailia", specializations: "None", helpAreas: "Google Forms" },
+            { id: 60, name: "Nourhan Muhammed Ibrahim", branch: "New Capital", specializations: "Manual, Performance", helpAreas: "Scripter, Moderators" },
+            { id: 61, name: "Omar Abdelhakim Abdellah", branch: "Alexandria", specializations: "Manual, Automation, API", helpAreas: "Not specified" },
+            { id: 62, name: "Omar Amr Zayed", branch: "Zagazig", specializations: "Manual", helpAreas: "Moderators, Google Forms" },
+            { id: 63, name: "Omar Ashraf Ismael", branch: "Zagazig", specializations: "Manual, Automation", helpAreas: "Not specified" },
+            { id: 64, name: "Omar Essam Mohamed", branch: "Zagazig", specializations: "None", helpAreas: "Not specified" },
+            { id: 65, name: "Omar Mohamed farahat", branch: "Ismailia", specializations: "Not specified", helpAreas: "Not specified" },
+            { id: 66, name: "Omar Tarek Mahmoud Youaef", branch: "Zagazig", specializations: "Manual", helpAreas: "Not specified" },
+            { id: 67, name: "رضوى أشرف أمجد (Radwa Ashraf Amjad)", branch: "Zagazig", specializations: "Manual", helpAreas: "Google Forms" },
+            { id: 68, name: "Radwa hasen hasen", branch: "Zagazig", specializations: "None", helpAreas: "Moderators" },
+            { id: 69, name: "Reham Elsayed Daoud", branch: "Alexandria", specializations: "Manual", helpAreas: "Google Forms" },
+            { id: 70, name: "Roaa Ayman Gawish", branch: "Zagazig", specializations: "None", helpAreas: "Not specified" },
+            { id: 71, name: "Salah samy elhassawy", branch: "New Capital", specializations: "Manual, API", helpAreas: "Not specified" },
+            { id: 72, name: "Salma mohamed ahmed", branch: "Zagazig", specializations: "None", helpAreas: "Not specified" },
+            { id: 73, name: "Salma Mohamed Abd El Moneim", branch: "New Capital", specializations: "Manual, Automation", helpAreas: "Not specified" },
+            { id: 74, name: "Sara Ahmed Nagy", branch: "Zagazig", specializations: "Manual", helpAreas: "Not specified" },
+            { id: 75, name: "Seif Eldien Alaa Eldien", branch: "New Capital", specializations: "Manual, Security", helpAreas: "Not specified" },
+            { id: 76, name: "Shaimaa Hassan Abdullah", branch: "Alexandria", specializations: "Manual", helpAreas: "Not specified" },
+            { id: 77, name: "Sondos Elsayed Wahdan", branch: "Zagazig", specializations: "Manual", helpAreas: "Other" },
+            { id: 78, name: "Tarek mohamed mohamed hamed", branch: "Ismailia", specializations: "Manual, Automation", helpAreas: "Moderators" },
+            { id: 79, name: "Yasser Saeed Hassan", branch: "New Capital", specializations: "Not specified", helpAreas: "Not specified" },
+            { id: 80, name: "Yasmin khaled fouad", branch: "Alexandria", specializations: "Not specified", helpAreas: "Moderators" },
+            { id: 81, name: "يوسف باسم جمال (Youssef Bassem Gamal)", branch: "Zagazig", specializations: "Manual, API", helpAreas: "Moderators" },
+            { id: 82, name: "Yousif Essam Ahmed", branch: "Zagazig", specializations: "Automation, API", helpAreas: "Not specified" },
+            { id: 83, name: "يوسف ناجي عبد اللطيف (Youssef Naji)", branch: "New Capital", specializations: "Manual", helpAreas: "Moderators, Google Forms" },
+            { id: 84, name: "Abdallah Ahmed Mohamed", branch: "Ismailia", specializations: "None", helpAreas: "General Help" }
+        ];
+
+        // Process data for statistics
+        function processBranchData() {
+            const branchCount = {};
+            rawData.forEach(member => {
+                const branch = member.branch;
+                branchCount[branch] = (branchCount[branch] || 0) + 1;
+            });
+            return branchCount;
+        }
+
+        function processSpecializationData() {
+            const specializationCount = {};
+            rawData.forEach(member => {
+                const specializations = member.specializations.split(', ');
+                specializations.forEach(spec => {
+                    if (spec !== "Not specified" && spec !== "None") {
+                        specializationCount[spec] = (specializationCount[spec] || 0) + 1;
+                    }
+                });
+            });
+            return specializationCount;
+        }
+
+        function processHelpAreasData() {
+            const helpAreasCount = {};
+            rawData.forEach(member => {
+                const helpAreas = member.helpAreas.split(', ');
+                helpAreas.forEach(area => {
+                    if (area !== "Not specified") {
+                        helpAreasCount[area] = (helpAreasCount[area] || 0) + 1;
+                    }
+                });
+            });
+            return helpAreasCount;
+        }
+
+        function processBranchSpecializationData() {
+            const branchSpecialization = {};
+            rawData.forEach(member => {
+                const branch = member.branch;
+                if (!branchSpecialization[branch]) {
+                    branchSpecialization[branch] = {};
+                }
+                
+                const specializations = member.specializations.split(', ');
+                specializations.forEach(spec => {
+                    if (spec !== "Not specified" && spec !== "None") {
+                        if (!branchSpecialization[branch][spec]) {
+                            branchSpecialization[branch][spec] = 0;
+                        }
+                        branchSpecialization[branch][spec]++;
+                    }
+                });
+            });
+            return branchSpecialization;
+        }
+
+        function processBranchHelpAreasData() {
+            const branchHelpAreas = {};
+            rawData.forEach(member => {
+                const branch = member.branch;
+                if (!branchHelpAreas[branch]) {
+                    branchHelpAreas[branch] = {};
+                }
+                
+                const helpAreas = member.helpAreas.split(', ');
+                helpAreas.forEach(area => {
+                    if (area !== "Not specified") {
+                        if (!branchHelpAreas[branch][area]) {
+                            branchHelpAreas[branch][area] = 0;
+                        }
+                        branchHelpAreas[branch][area]++;
+                    }
+                });
+            });
+            return branchHelpAreas;
+        }
+
+        // Navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                // Remove active class from all links and sections
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Show corresponding section
+                const sectionId = this.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+                
+                // Initialize content for the active section
+                setTimeout(() => {
+                    if (sectionId === 'overview') {
+                        initOverviewCharts();
+                    } else if (sectionId === 'specializations') {
+                        initSpecializationSection();
+                    } else if (sectionId === 'help-areas') {
+                        initHelpAreasSection();
+                    } else if (sectionId === 'branches') {
+                        initBranchesSection();
+                    } else if (sectionId === 'table') {
+                        initTableSection();
+                    }
+                }, 100); // Small delay to ensure the section is visible
+            });
+        });
+
+        // Initialize Overview Charts
+        function initOverviewCharts() {
+            // Branch Distribution Chart
+            const branchCtx = document.getElementById('branchChart');
+            if (branchCtx && !branchCtx.chart) {
+                const branchData = processBranchData();
+                branchCtx.chart = new Chart(branchCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: Object.keys(branchData),
+                        datasets: [{
+                            data: Object.values(branchData),
+                            backgroundColor: [
+                                '#4361ee',
+                                '#3f37c9',
+                                '#4cc9f0',
+                                '#7209b7',
+                                '#f72585',
+                                '#4361ee'
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Specialization Distribution Chart
+            const specializationCtx = document.getElementById('specializationChart');
+            if (specializationCtx && !specializationCtx.chart) {
+                const specializationData = processSpecializationData();
+                specializationCtx.chart = new Chart(specializationCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(specializationData),
+                        datasets: [{
+                            label: 'Number of Members',
+                            data: Object.values(specializationData),
+                            backgroundColor: '#4361ee',
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Help Areas Distribution Chart
+            const helpAreasCtx = document.getElementById('helpAreasChart');
+            if (helpAreasCtx && !helpAreasCtx.chart) {
+                const helpAreasData = processHelpAreasData();
+                // Sort by count and take top 10
+                const sortedHelpAreas = Object.entries(helpAreasData)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 10);
+                
+                helpAreasCtx.chart = new Chart(helpAreasCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: sortedHelpAreas.map(item => item[0]),
+                        datasets: [{
+                            label: 'Number of Members',
+                            data: sortedHelpAreas.map(item => item[1]),
+                            backgroundColor: '#4cc9f0',
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Correlation Chart
+            const correlationCtx = document.getElementById('correlationChart');
+            if (correlationCtx && !correlationCtx.chart) {
+                const branchSpecializationData = processBranchSpecializationData();
+                
+                // Prepare data for the chart
+                const branches = Object.keys(branchSpecializationData);
+                const specializations = [...new Set(rawData.flatMap(member => 
+                    member.specializations.split(', ').filter(spec => spec !== "Not specified" && spec !== "None")
+                ))];
+                
+                const datasets = specializations.map((spec, index) => {
+                    const colors = ['#4361ee', '#3f37c9', '#4cc9f0', '#7209b7', '#f72585'];
+                    return {
+                        label: spec,
+                        data: branches.map(branch => branchSpecializationData[branch][spec] || 0),
+                        backgroundColor: colors[index % colors.length],
+                        borderWidth: 0
+                    };
+                });
+                
+                correlationCtx.chart = new Chart(correlationCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: branches,
+                        datasets: datasets
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                stacked: true
+                            },
+                            y: {
+                                stacked: true,
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Initialize Specialization Section
+        function initSpecializationSection() {
+            populateSpecializationStatistics();
+            
+            // Specialization Breakdown Chart
+            const specializationBreakdownCtx = document.getElementById('specializationBreakdownChart');
+            if (specializationBreakdownCtx && !specializationBreakdownCtx.chart) {
+                const specializationData = processSpecializationData();
+                specializationBreakdownCtx.chart = new Chart(specializationBreakdownCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(specializationData),
+                        datasets: [{
+                            data: Object.values(specializationData),
+                            backgroundColor: [
+                                '#4361ee',
+                                '#3f37c9',
+                                '#4cc9f0',
+                                '#7209b7',
+                                '#f72585'
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Branch Specialization Chart
+            const branchSpecializationCtx = document.getElementById('branchSpecializationChart');
+            if (branchSpecializationCtx && !branchSpecializationCtx.chart) {
+                const branchSpecializationData = processBranchSpecializationData();
+                
+                // Prepare data for the chart
+                const branches = Object.keys(branchSpecializationData);
+                const specializations = [...new Set(rawData.flatMap(member => 
+                    member.specializations.split(', ').filter(spec => spec !== "Not specified" && spec !== "None")
+                ))];
+                
+                branchSpecializationCtx.chart = new Chart(branchSpecializationCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: specializations,
+                        datasets: branches.slice(0, 3).map((branch, index) => {
+                            const colors = [
+                                { background: 'rgba(67, 97, 238, 0.2)', border: '#4361ee' },
+                                { background: 'rgba(76, 201, 240, 0.2)', border: '#4cc9f0' },
+                                { background: 'rgba(114, 9, 183, 0.2)', border: '#7209b7' }
+                            ];
+                            return {
+                                label: branch,
+                                data: specializations.map(spec => branchSpecializationData[branch][spec] || 0),
+                                backgroundColor: colors[index].background,
+                                borderColor: colors[index].border,
+                                pointBackgroundColor: colors[index].border,
+                                borderWidth: 2
+                            };
+                        })
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Initialize Help Areas Section
+        function initHelpAreasSection() {
+            populateHelpAreasStatistics();
+            
+            // Help Areas Breakdown Chart
+            const helpAreasBreakdownCtx = document.getElementById('helpAreasBreakdownChart');
+            if (helpAreasBreakdownCtx && !helpAreasBreakdownCtx.chart) {
+                const helpAreasData = processHelpAreasData();
+                // Sort by count and take top 10
+                const sortedHelpAreas = Object.entries(helpAreasData)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 10);
+                
+                helpAreasBreakdownCtx.chart = new Chart(helpAreasBreakdownCtx, {
+                    type: 'polarArea',
+                    data: {
+                        labels: sortedHelpAreas.slice(0, 5).map(item => item[0]),
+                        datasets: [{
+                            data: sortedHelpAreas.slice(0, 5).map(item => item[1]),
+                            backgroundColor: [
+                                'rgba(67, 97, 238, 0.7)',
+                                'rgba(63, 55, 201, 0.7)',
+                                'rgba(76, 201, 240, 0.7)',
+                                'rgba(114, 9, 183, 0.7)',
+                                'rgba(247, 37, 133, 0.7)'
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Branch Help Chart
+            const branchHelpCtx = document.getElementById('branchHelpChart');
+            if (branchHelpCtx && !branchHelpCtx.chart) {
+                const branchHelpAreasData = processBranchHelpAreasData();
+                
+                // Get top 5 help areas
+                const helpAreasData = processHelpAreasData();
+                const sortedHelpAreas = Object.entries(helpAreasData)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 5);
+                const topHelpAreas = sortedHelpAreas.map(item => item[0]);
+                
+                const branches = Object.keys(branchHelpAreasData);
+                
+                const helpDatasets = topHelpAreas.map((area, index) => {
+                    const colors = [
+                        'rgba(67, 97, 238, 0.7)',
+                        'rgba(63, 55, 201, 0.7)',
+                        'rgba(76, 201, 240, 0.7)',
+                        'rgba(114, 9, 183, 0.7)',
+                        'rgba(247, 37, 133, 0.7)'
+                    ];
+                    return {
+                        label: area,
+                        data: branches.map(branch => branchHelpAreasData[branch][area] || 0),
+                        backgroundColor: colors[index],
+                        borderWidth: 0
+                    };
+                });
+                
+                branchHelpCtx.chart = new Chart(branchHelpCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: branches,
+                        datasets: helpDatasets
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                stacked: true
+                            },
+                            y: {
+                                stacked: true,
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Initialize Branches Section
+        function initBranchesSection() {
+            populateBranchStatistics();
+            
+            // Branch Member Chart
+            const branchMemberCtx = document.getElementById('branchMemberChart');
+            if (branchMemberCtx && !branchMemberCtx.chart) {
+                const branchData = processBranchData();
+                branchMemberCtx.chart = new Chart(branchMemberCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(branchData),
+                        datasets: [{
+                            data: Object.values(branchData),
+                            backgroundColor: [
+                                '#4361ee',
+                                '#3f37c9',
+                                '#4cc9f0',
+                                '#7209b7',
+                                '#f72585',
+                                '#4361ee'
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Branch Mix Chart
+            const branchMixCtx = document.getElementById('branchMixChart');
+            if (branchMixCtx && !branchMixCtx.chart) {
+                const branchSpecializationData = processBranchSpecializationData();
+                const branches = Object.keys(branchSpecializationData);
+                
+                branchMixCtx.chart = new Chart(branchMixCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: branches,
+                        datasets: [{
+                            data: branches.map(branch => {
+                                const total = Object.values(branchSpecializationData[branch]).reduce((sum, count) => sum + count, 0);
+                                return total;
+                            }),
+                            backgroundColor: [
+                                '#4361ee',
+                                '#3f37c9',
+                                '#4cc9f0',
+                                '#7209b7',
+                                '#f72585',
+                                '#4361ee'
+                            ],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Initialize Table Section
+        function initTableSection() {
+            generateTableRows();
+        }
+
+        // Populate statistics lists
+        function populateSpecializationStatistics() {
+            // Specialization Statistics
+            const specializationStats = document.getElementById('specialization-stats');
+            if (specializationStats && specializationStats.querySelector('.loading')) {
+                specializationStats.innerHTML = '';
+                
+                const specializationData = processSpecializationData();
+                
+                Object.entries(specializationData)
+                    .sort((a, b) => b[1] - a[1])
+                    .forEach(([spec, count]) => {
+                        const item = document.createElement('li');
+                        item.className = 'stat-item';
+                        item.innerHTML = `
+                            <span class="stat-name">${spec}</span>
+                            <span class="stat-value">${count} members</span>
+                        `;
+                        specializationStats.appendChild(item);
+                    });
+            }
+
+            // Branch Specialization Statistics
+            const branchSpecializationStats = document.getElementById('branch-specialization-stats');
+            if (branchSpecializationStats && branchSpecializationStats.querySelector('.loading')) {
+                branchSpecializationStats.innerHTML = '';
+                
+                const branchSpecializationData = processBranchSpecializationData();
+                
+                Object.entries(branchSpecializationData).forEach(([branch, specs]) => {
+                    const topSpec = Object.entries(specs).sort((a, b) => b[1] - a[1])[0];
+                    if (topSpec) {
+                        const item = document.createElement('li');
+                        item.className = 'stat-item';
+                        item.innerHTML = `
+                            <span class="stat-name">${branch}</span>
+                            <span class="stat-value">${topSpec[0]} (${topSpec[1]})</span>
+                        `;
+                        branchSpecializationStats.appendChild(item);
+                    }
+                });
+            }
+        }
+
+        function populateHelpAreasStatistics() {
+            // Help Areas Statistics
+            const helpAreasStats = document.getElementById('help-areas-stats');
+            if (helpAreasStats && helpAreasStats.querySelector('.loading')) {
+                helpAreasStats.innerHTML = '';
+                
+                const helpAreasData = processHelpAreasData();
+                
+                Object.entries(helpAreasData)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 10)
+                    .forEach(([area, count]) => {
+                        const item = document.createElement('li');
+                        item.className = 'stat-item';
+                        item.innerHTML = `
+                            <span class="stat-name">${area}</span>
+                            <span class="stat-value">${count} members</span>
+                        `;
+                        helpAreasStats.appendChild(item);
+                    });
+            }
+
+            // Branch Help Statistics
+            const branchHelpStats = document.getElementById('branch-help-stats');
+            if (branchHelpStats && branchHelpStats.querySelector('.loading')) {
+                branchHelpStats.innerHTML = '';
+                
+                const branchHelpAreasData = processBranchHelpAreasData();
+                
+                Object.entries(branchHelpAreasData).forEach(([branch, areas]) => {
+                    const topArea = Object.entries(areas).sort((a, b) => b[1] - a[1])[0];
+                    if (topArea) {
+                        const item = document.createElement('li');
+                        item.className = 'stat-item';
+                        item.innerHTML = `
+                            <span class="stat-name">${branch}</span>
+                            <span class="stat-value">${topArea[0]} (${topArea[1]})</span>
+                        `;
+                        branchHelpStats.appendChild(item);
+                    }
+                });
+            }
+        }
+
+        function populateBranchStatistics() {
+            // Branch Statistics
+            const branchStats = document.getElementById('branch-stats');
+            if (branchStats && branchStats.querySelector('.loading')) {
+                branchStats.innerHTML = '';
+                
+                const branchData = processBranchData();
+                
+                Object.entries(branchData)
+                    .sort((a, b) => b[1] - a[1])
+                    .forEach(([branch, count]) => {
+                        const item = document.createElement('li');
+                        item.className = 'stat-item';
+                        item.innerHTML = `
+                            <span class="stat-name">${branch}</span>
+                            <span class="stat-value">${count} members</span>
+                        `;
+                        branchStats.appendChild(item);
+                    });
+            }
+
+            // Member Distribution Statistics
+            const memberDistributionStats = document.getElementById('member-distribution-stats');
+            if (memberDistributionStats && memberDistributionStats.querySelector('.loading')) {
+                memberDistributionStats.innerHTML = '';
+                
+                const branchData = processBranchData();
+                const totalMembers = rawData.length;
+                
+                Object.entries(branchData).forEach(([branch, count]) => {
+                    const percentage = ((count / totalMembers) * 100).toFixed(1);
+                    const item = document.createElement('li');
+                    item.className = 'stat-item';
+                    item.innerHTML = `
+                        <span class="stat-name">${branch}</span>
+                        <span class="stat-value">${percentage}%</span>
+                    `;
+                    memberDistributionStats.appendChild(item);
+                });
+            }
+        }
+
+        // Generate table rows
+        function generateTableRows(members = rawData) {
+            const tableBody = document.getElementById('table-body');
+            if (tableBody && tableBody.querySelector('.loading')) {
+                tableBody.innerHTML = '';
+                
+                members.forEach(member => {
+                    const specializations = member.specializations.split(', ').filter(spec => spec !== "Not specified" && spec !== "None");
+                    const helpAreas = member.helpAreas.split(', ').filter(area => area !== "Not specified");
+                    
+                    const specializationTags = specializations.map(spec => {
+                        let tagClass = 'tag-other';
+                        if (spec === 'Manual') tagClass = 'tag-manual';
+                        else if (spec === 'Automation') tagClass = 'tag-automation';
+                        else if (spec === 'API') tagClass = 'tag-api';
+                        else if (spec === 'Performance') tagClass = 'tag-performance';
+                        else if (spec === 'Security') tagClass = 'tag-security';
+                        
+                        return `<span class="tag ${tagClass}">${spec}</span>`;
+                    }).join('');
+                    
+                    const helpTags = helpAreas.map(area => {
+                        let tagClass = 'tag-other';
+                        if (area === 'Moderators') tagClass = 'tag-moderator';
+                        else if (area === 'Scripter') tagClass = 'tag-scripter';
+                        else if (area === 'Google Forms') tagClass = 'tag-google-forms';
+                        
+                        return `<span class="tag ${tagClass}">${area}</span>`;
+                    }).join('');
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${member.id}</td>
+                        <td>${member.name}</td>
+                        <td>${member.branch}</td>
+                        <td>${specializationTags || '<span class="text-muted">None</span>'}</td>
+                        <td>${helpTags || '<span class="text-muted">None</span>'}</td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+            }
+        }
+
+        // Filter functions
+        function filterTableMembers() {
+            const branchFilter = document.getElementById('table-branch-filter').value;
+            const specializationFilter = document.getElementById('table-specialization-filter').value;
+            
+            let filteredMembers = rawData;
+            
+            if (branchFilter !== 'all') {
+                filteredMembers = filteredMembers.filter(member => member.branch === branchFilter);
+            }
+            
+            if (specializationFilter !== 'all') {
+                filteredMembers = filteredMembers.filter(member => 
+                    member.specializations.includes(specializationFilter)
+                );
+            }
+            
+            generateTableRows(filteredMembers);
+        }
+
+        // Search functionality
+        function searchMembers(query) {
+            if (!query) {
+                generateTableRows();
+                return;
+            }
+            
+            const lowerQuery = query.toLowerCase();
+            const filteredMembers = rawData.filter(member => {
+                return (
+                    member.name.toLowerCase().includes(lowerQuery) ||
+                    member.branch.toLowerCase().includes(lowerQuery) ||
+                    member.specializations.toLowerCase().includes(lowerQuery) ||
+                    member.helpAreas.toLowerCase().includes(lowerQuery)
+                );
+            });
+            
+            generateTableRows(filteredMembers);
+        }
+
+        // Event listeners
+        document.getElementById('table-branch-filter').addEventListener('change', filterTableMembers);
+        document.getElementById('table-specialization-filter').addEventListener('change', filterTableMembers);
+        document.getElementById('global-search').addEventListener('input', (e) => {
+            searchMembers(e.target.value);
+        });
+
+        // Initialize the dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the overview section on page load
+            setTimeout(() => {
+                initOverviewCharts();
+            }, 100);
+        });
+    </script>
+</body>
+</html>
